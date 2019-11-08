@@ -1,2 +1,7 @@
-# xuexibang
-this is homepage for project xuexibang
+# Xuexibang
+
+## This is homepage for project xuexibang.
+The project is aimed to offer a convenient online forum 
+where students can upload tough problems and 
+in meanwhile share their answers in other puzzles. 
+
