@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head> <!-- 这是一个html的页面模板，包括页眉页脚,需要前端同学的美化，可以找网上的模板 -->
+    {% block head %}
+        <meta charset="utf-8">
+        <title>{% block title %}A Flask demo with jinja2{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        {% block styles %}
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css' ) }}">
+        {% endblock %}
+    {% endblock %}
+</head>
+<body>
+<nav> <!--导航栏-->
+    <ul><li><a href="{{ url_for('index') }}">Home</a></li></ul>
+</nav>
+
+<main> <!--显示flash的内容-->
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+</main>
+<footer>
+    {% block footer %}
+        <small> &copy; 2019 <a href="https://blog.csdn.net/weixin_44617992/article/details/102926000" title="Written by Sjy">Victor Shao</a> /
+            <a href="https://github.com/Sugar-Coder/QnAWebApp.git" title="Fork me on GitHub">GitHub</a> /
+            <a href="http://helloflask.com" title="A Flask project">QnAWebApp development base on the book</a>
+        </small>
+    {% endblock %}
+</footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>
