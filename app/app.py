@@ -31,11 +31,10 @@ movies = [
 
 # 对于URL http://localhost:5000/
 @app.route('/')
-def index():
-    return '<h1>Hello world</h1>'  # 返回一个html元素
+def hello():
+    return redirect(url_for('home'))
 
 
-# 对于URL http://localhost:5000/home
 @app.route('/home')
 def home():
     return render_template('home.html', data=['some', 'data', 'from', 'the', 'back', 'end'])
@@ -45,3 +44,24 @@ def home():
 @app.route('/watchlist')
 def watchlist():
     return render_template('watchlist.html', user=user, movies=movies)  # 返回带数据的html文档
+
+
+@app.route('/register')
+def register():
+    return render_template('register.html', data=['data'])
+
+
+@app.route('/signin')
+def signin():
+    return render_template('signin.html', data=['data'])
+
+
+@app.route('/myquestion')
+def myquestion():
+    return render_template('myquestion.html', data=['data'])
+
+
+@app.route('/qna')
+def qna():
+    return render_template('qna.html', data=['data'])
+
