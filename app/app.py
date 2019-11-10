@@ -5,8 +5,10 @@ __author__ = "Jinyang Shao"
 import os
 from flask import Flask, render_template, flash, redirect, url_for
 
+from forms import LoginForm
+
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'secret string')
+app.secret_key = os.getenv('SECRET_KEY', 'our secret')
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
@@ -48,10 +50,11 @@ def watchlist():
 
 @app.route('/register')
 def register():
-    return render_template('register.html', data=['data'])
+    form = LoginForm()
+    return render_template('register.html', data=['data'], form=form)
 
 
-@app.route('/signin')
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
     return render_template('signin.html', data=['data'])
 
