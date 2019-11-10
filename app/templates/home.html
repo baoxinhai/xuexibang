@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home page</title>
-</head>
-<body>
-<a href="{{ url_for('watchlist') }}">&larr; Return</a>
-<h2>这是主页里body的内容</h2>
+{% extends 'base.html' %}
+{% from 'macros.html' import func %}
+
+{% block content %}
+<h1> 同学们的问题如下 </h1>
 <ul>
-    {% for da in data %}
-    <li>{{ da }}</li>
-    {% endfor %}
+    <li><a href="{{ url_for('myquestion') }}">看看我提的问题</a> </li>
+    <li>Macro: {{ func(amount=0) }}</li>
 </ul>
-</body>
-</html>
+{% endblock %}
