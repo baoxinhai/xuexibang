@@ -18,11 +18,12 @@ def home():
 
 @app.route('/register')
 def register():
-    form = RegisterForm
+    form = RegisterForm()
     if form.validate_on_submit():
         username = form.username.data
         email = form.email.data
         flash('新用户：%s, email: %s' % username, email)
+        return redirect(url_for('home'))
     return render_template('register.html', data=['data'], form=form)
 
 
@@ -33,7 +34,7 @@ def signin():
         username = form.username.data
         flash('Welcome home, %s!' % username)
         return redirect(url_for('home'))
-    return render_template('signin.html', data=['data'])
+    return render_template('signin.html', data=['data'], form=form)
 
 
 @app.route('/myquestion')

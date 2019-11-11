@@ -6,7 +6,7 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 
 app = Flask('xuexibang')
-app.config.from_pyfile('../config.py')
+app.config.from_pyfile('settings.py')
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
