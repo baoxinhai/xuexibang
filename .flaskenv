@@ -1,0 +1,2 @@
+FLASK_APP=xuexibang
+FLASK_ENV=development

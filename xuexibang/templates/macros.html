@@ -22,3 +22,12 @@
 
 
 <!-- 以下用来渲染表单类 -->
+{% macro form_field(field) %} <!--用于在模板中渲染表单-->
+    {{ field.label }}<br>
+    {{ field(**kwargs) }}<br>
+    {% if field.errors -%}
+        {% for error in field.errors -%}
+            <small class="error">{{ error }}</small><br>
+        {%- endfor %}
+    {%- endif %}
+{% endmacro %}
