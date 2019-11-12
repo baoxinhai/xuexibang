@@ -7,6 +7,11 @@ verify_ssl = true
 
 [packages]
 flask = "*"
+flask-wtf = "*"
+flask-ckeditor = "*"
+bootstrap-flask = "*"
+flask-moment = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "2.7"
