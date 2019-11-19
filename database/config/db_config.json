@@ -1,0 +1,22 @@
+{
+  "env": {
+    "test": "true"
+  },
+  "mysql": {
+    "db_type": "mysql",
+    "host": "localhost",
+    "db": "db",
+    "port": "3306",
+    "username": "root",
+    "pwd": "root"
+  },
+
+  "mysql_test": {
+    "db_type": "mysql",
+    "host": "localhost",
+    "db": "xxbdb",
+    "port": "3306",
+    "username": "webdb",
+    "pwd": "webdata"
+  }
+}

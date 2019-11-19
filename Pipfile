@@ -12,6 +12,8 @@ flask-ckeditor = "*"
 bootstrap-flask = "*"
 flask-moment = "*"
 python-dotenv = "*"
+pymysql = "*"
+sqlalchemy = "*"
 
 [requires]
 python_version = "2.7"
