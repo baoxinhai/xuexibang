@@ -5,11 +5,11 @@ The project is aimed to offer a convenient online forum
 where students can upload tough problems and 
 in meanwhile share their answers in other puzzles. 
 
-## Task Deliver
+## Task Allocation / Log
 11/7 <br>https://blog.csdn.net/weixin_44617992/article/details/102926000
 
 
-11/9 <br>https://blog.csdn.net/weixin_44617992/article/details/102983602
+11/9 (including )<br>https://blog.csdn.net/weixin_44617992/article/details/102983602
 
 
 11/19<br>https://blog.csdn.net/weixin_44617992/article/details/103015088
