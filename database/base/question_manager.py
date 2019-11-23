@@ -9,7 +9,7 @@
 from database.models.model import QuestionInfo
 
 
-def get_home_question(number, session):
+def get_recommend_question(number, session):
     question_list = []
     res = {}
     question_info_list = session.query(QuestionInfo).limit(number).all()
@@ -25,6 +25,6 @@ def get_home_question(number, session):
             return res
     res["success"] = True
     res["status"] = 0
-    res["message"] = "Home question got"
+    res["message"] = "Recommend question got"
     res["content"] = question_info_list
     return res

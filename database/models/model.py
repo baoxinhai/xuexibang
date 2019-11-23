@@ -47,7 +47,7 @@ class UserInfo(BaseModel, ModelProcessor):
     name = Column(String(32), nullable=False,unique=True)
     password = Column(String(32), nullable=False)
     email = Column(String(32), nullable=False,unique=True)
-    admin=Column(Boolean,nullable=False)
+    admin=Column(Boolean,nullable=True)
 
 
 class QuestionInfo(BaseModel, ModelProcessor):
