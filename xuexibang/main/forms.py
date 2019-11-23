@@ -23,3 +23,7 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(8, 128)])
     reinputpasswd = PasswordField('RePassword', validators=[DataRequired(), Length(8, 128)])  # 未添加验证
     submit = SubmitField('Register')
+
+
+class QuestionForm(FlaskForm):
+    content = StringField('Content', validators=[DataRequired()], render_kw={'placeholder': 'please input question description'})
