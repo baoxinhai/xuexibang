@@ -21,24 +21,25 @@ class Operator:
 
     def __init__(self):
         # 初始化数据库
-        # 不需要content
         self.DATABASE_INIT = 0
 
         # 根据用户名获取用户信息
-        # content为含有key为name,value为用户名的dict
         self.GET_UER_BY_NAME = 1
 
         # 插入用户
-        # content为含有key为 name, password, email, value分别为用户名，密码和邮箱的dict
         self.INSERT_USER = 2
 
         # 根据用户名删除用户
-        # content为含有key为name,value为用户名的dict
         self.DELETE_USER_BY_NAME = 3
 
         # 根据用户名更新密码
-        # content为含有key为name, password, value分别为用户名和密码的dict
         self.UPDATE_USER_PWD = 4
+
+        # 获取推荐问题列表
+        self.GET_RECOMMEND_QUESTION = 5
+
+        # 获取用户关注的问题列表
+        self.GET_USER_FOLLOW = 6
 
     def get_result(self, given):
         """
