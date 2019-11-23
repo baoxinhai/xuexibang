@@ -74,3 +74,10 @@ class Follow(BaseModel, ModelProcessor):
 
     uid = Column(Integer, index=False, nullable=False, primary_key=True)
     quid = Column(Integer, index=False, nullable=False, primary_key=True)
+
+
+class CategoryForm(BaseModel, ModelProcessor):
+    __tablename__ = "CategoryForm"
+
+    name = Column(String(10), unique=True)
+    id = Column(Integer, primary_key=True)
