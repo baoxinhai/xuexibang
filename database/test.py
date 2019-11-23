@@ -4,14 +4,12 @@
 # filename: test.py
 # 本模块为接口测试模块
 from database.api.main_base import Operator
-from database.api.main_base import GET_UER_BY_NAME
-from database.api.main_base import DELETE_USER_BY_NAME
-from database.api.main_base import UPDATE_USER_PWD
-from database.api.main_base import INSERT_USER
+from database.models.model import UserInfo
 
 if __name__ == '__main__':
     o = Operator()
 
+    '''
     print(u"查询admin结果:")
     print (o.get_result({"function": GET_UER_BY_NAME, "content": {"name": "admin"}}))
 
@@ -32,5 +30,9 @@ if __name__ == '__main__':
 
     print(u"查询admin结果:")
     print (o.get_result({"function": GET_UER_BY_NAME, "content": {"name": "admin"}}))
+    '''
+    session=o.get_session()
+    user_info = session.query(UserInfo).all()
+    print user_info[0].to_dict()
 
     o.destroy()
