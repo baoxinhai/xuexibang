@@ -27,3 +27,11 @@ class RegisterForm(FlaskForm):
 
 class QuestionForm(FlaskForm):
     content = StringField('Content', validators=[DataRequired()], render_kw={'placeholder': 'please input question description'})
+
+class HomeForm(FlaskForm):
+    # 问题标题
+    title = StringField('问题标题', validators=[DataRequired()])
+    # 问题描述
+    description = StringField('问题描述', validators=[DataRequired()])
+    # 发布问题按钮
+    submit = SubmitField('提交')
