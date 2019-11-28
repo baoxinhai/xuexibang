@@ -6,25 +6,110 @@
 # 本模块包含：
 # 不对外可见的数据库操作函数
 
-from database.models.model import QuestionInfo
+from database.models.model import QuestionInfo, AnswerInfo
 
 
 def get_recommend_question(number, session):
     question_list = []
     res = {}
-    question_info_list = session.query(QuestionInfo).limit(number).all()
+    try:
+        question_info_list = session.query(QuestionInfo).limit(number).all()
 
-    for question_info in question_info_list:
-        if isinstance(question_info, QuestionInfo):
-            question_list.append(question_info.to_dict())
+        for question_info in question_info_list:
+            if isinstance(question_info, QuestionInfo):
+                question_list.append(question_info.to_dict())
+            else:
+                raise
+        res["success"] = True
+        res["status"] = 0
+        res["message"] = "Recommend question got"
+        res["content"] = question_info_list
+        return res
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1000
+        res["message"] = e.message
+        res["content"] = question_info_list
+        return res
+
+
+def insert_question(given, session):
+    res = {}
+    try:
+        question_info = QuestionInfo()
+        question_info.dict_init(given)
+        session.add(question_info)
+        session.commit()
+        res["success"] = True
+        res["status"] = 0
+        res["message"] = "Question: %s successfully insert" % question_info.quid
+        res["content"] = None
+        return res
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1002
+        res["message"] = e.message
+        res["content"] = None
+        return res
+
+
+def get_question(quid, session):
+    res = {}
+    try:
+        question_info = session.query(QuestionInfo).filter_by(quid=quid["quid"]).first()
+        if not isinstance(question_info, QuestionInfo):
+            raise
         else:
-            res["success"] = False
-            res["status"] = 1000
-            res["message"] = "Unknown Error"
-            res["content"] = question_info_list
+            res["success"] = True
+            res["status"] = 0
+            res["message"] = "Question: %s successfully get" % quid["quid"]
+            res["content"] = question_info.to_dict()
             return res
-    res["success"] = True
-    res["status"] = 0
-    res["message"] = "Recommend question got"
-    res["content"] = question_info_list
-    return res
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1002
+        res["message"] = e.message
+        res["content"] = None
+        return res
+
+
+def get_question_by_uid(uid, session):
+    res = {}
+    try:
+        question_info_list = session.query(QuestionInfo).filter_by(uid=uid["uid"]).all()
+        res["success"] = True
+        res["status"] = 0
+        res["message"] = "User: %s 'questions successfully get" % uid["uid"]
+        res["content"] = []
+        for question_info in question_info_list:
+            res["content"].append(question_info.to_dict())
+
+        return res
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1002
+        res["message"] = e.message
+        res["content"] = None
+        return res
+
+
+def delete_question_by_id(quid, session):
+    res = {}
+    try:
+        question_info = session.query(QuestionInfo).filter_by(quid=quid["quid"]).first()
+        answer_list = session.query(AnswerInfo).filter_by(quid=quid["quid"]).all()
+        for answer in answer_list:
+            session.delete(answer)
+        session.delete(question_info)
+        session.commit()
+        res["success"] = True
+        res["status"] = 0
+        res["message"] = "Question: %s 'deleted successfully" % quid["quid"]
+        res["content"] = None
+        return res
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1002
+        res["message"] = e.message
+        res["content"] = None
+        return res
