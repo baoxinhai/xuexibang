@@ -12,13 +12,26 @@
 </head>
 <body>
 <nav> <!--导航栏-->
-    <ul><li><a href="{{ url_for('front.home') }}">Home</a></li></ul>
+{#    <ul><li><a href="{{ url_for('front.home') }}">Home</a></li></ul>#}
+
+    <ul>
+        <ul>
+			<li>logo</li>
+			<li> <a href="{{ url_for('front.home') }}">首页</a></li>
+			<li> <a href="{{ url_for('front.myquestion') }} ">我发布的问题</a></li>
+		    <li><a href="{{ url_for('front.home') }}">我回答的问题</a></li>   {#!链接#}
+			<li><a href="{{ url_for('front.home') }}" >我关注的问题</a></li>
+{#			<li>登录</li>   <!-- 显示登录或用户名 -->#}
+{#			<li>注册</li>	<!-- 显示注册或注销 -->#}
+		</ul>
+    </ul>
+
 </nav>
 
-<main> <!--显示flash的内容-->
-    {% for message in get_flashed_messages() %}
-        <div class="alert">{{ message }}</div>
-    {% endfor %}
+<main>
+{#    {% for message in get_flashed_messages() %}#}
+{#        <div class="alert">{{ message }}</div>#}
+{#    {% endfor %}#}
     {% block content %}{% endblock %}
 </main>
 <footer>
