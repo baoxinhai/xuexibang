@@ -67,9 +67,9 @@ class QuestionInfo(BaseModel, ModelProcessor):
     qucontent = Column(String(32), nullable=False)
     qutitle = Column(String(32), nullable=False)
     qutime = Column(DateTime, nullable=False)
-    uid = Column(Integer, ForeignKey(UserInfo.uid), nullable=False)
+    uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     ansid = Column(Integer, nullable=True)
-    catid = Column(Integer, ForeignKey(Category.catid), nullable=True)
+    catid = Column(Integer, ForeignKey(Category.catid, ondelete="SET NULL", onupdate="CASCADE"), nullable=True)
 
 
 class AnswerInfo(BaseModel, ModelProcessor):
@@ -78,18 +78,20 @@ class AnswerInfo(BaseModel, ModelProcessor):
     ansid = Column(Integer, primary_key=True)
     anscontent = Column(String(32), nullable=False)
     anstime = Column(DateTime, nullable=False)
-    uid = Column(Integer, ForeignKey(UserInfo.uid), nullable=False)
-    quid = Column(Integer, ForeignKey(QuestionInfo.uid), nullable=False)
+    uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    quid = Column(Integer, ForeignKey(QuestionInfo.quid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 
 
 class Follow(BaseModel, ModelProcessor):
     __tablename__ = "Follow"
 
-    uid = Column(Integer, ForeignKey(UserInfo.uid), nullable=False, primary_key=True)
-    quid = Column(Integer, ForeignKey(QuestionInfo.uid), nullable=False, primary_key=True)
+    uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False,
+                 primary_key=True)
+    quid = Column(Integer, ForeignKey(QuestionInfo.quid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False,
+                  primary_key=True)
 
 
 class Tmp:
-    def __init__(self,dict):
+    def __init__(self, dict):
         for key in dict:
             setattr(Tmp, key, dict.get(key))

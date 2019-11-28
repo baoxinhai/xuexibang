@@ -13,7 +13,7 @@ def get_recommend_question(number, session):
     question_list = []
     res = {}
     try:
-        question_info_list = session.query(QuestionInfo).limit(number).all()
+        question_info_list = session.query(QuestionInfo).limit(number["numeber"]).all()
 
         for question_info in question_info_list:
             if isinstance(question_info, QuestionInfo):
@@ -97,9 +97,9 @@ def delete_question_by_id(quid, session):
     res = {}
     try:
         question_info = session.query(QuestionInfo).filter_by(quid=quid["quid"]).first()
-        answer_list = session.query(AnswerInfo).filter_by(quid=quid["quid"]).all()
-        for answer in answer_list:
-            session.delete(answer)
+        # answer_list = session.query(AnswerInfo).filter_by(quid=quid["quid"]).all()
+        # for answer in answer_list:
+        # session.delete(answer)
         session.delete(question_info)
         session.commit()
         res["success"] = True
@@ -110,6 +110,29 @@ def delete_question_by_id(quid, session):
     except Exception as e:
         res["success"] = False
         res["status"] = 1002
+        res["message"] = e.message
+        res["content"] = None
+        return res
+
+
+def get_question_by_cat(given, session):
+    res = {}
+    try:
+        question_info_list = session.query(QuestionInfo).filter_by(catid = given["catid"]).limit(given["number"]).all()
+        question_list = []
+
+        for question_info in question_info_list:
+            question_list.append(question_info.to_dict())
+
+        res["success"] = True
+        res["status"] = 0
+        res["message"] = "Category: %d 's questions got successfully" % given["catid"]
+        res["content"] = question_list
+        return res
+
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1000
         res["message"] = e.message
         res["content"] = None
         return res

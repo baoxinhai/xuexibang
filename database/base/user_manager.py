@@ -56,13 +56,6 @@ def delete_user_by_name(name, session):
     try:
         # 检查数据库中是否存在用户
         user_info = session.query(UserInfo).filter_by(name=name["name"]).first()
-        question_list = session.query(QuestionInfo).filter_by(uid=user_info.uid).all()
-        for question in question_list:
-            delete_question_by_id({"quid": question.quid}, session)
-
-        follow_list = session.query(Follow).filter_by(uid=user_info.uid).all()
-        for follow in follow_list:
-            session.delete(follow)
 
         session.delete(user_info)
         session.commit()

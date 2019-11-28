@@ -13,6 +13,7 @@ from database.base.user_manager import *
 from database.base.logger_manager import *
 from database.base.question_manager import *
 from database.base.answer_manager import  *
+from database.base.category_manager import *
 # 建立数据库引擎
 engine = get_engine()
 
@@ -73,6 +74,18 @@ class Operator:
 
         # 删除关注
         self.DELETE_FOLLOW = 17
+
+        # 插入分类
+        self.INSERT_CATEGORY = 18
+
+        # 删除分类
+        self.DELETE_CATEGORY = 19
+
+        # 获取所有分类
+        self.GET_ALL_CATEGORY = 20
+
+        # 根据分类查询问题
+        self.GET_QUESTION_BY_CAT = 21
     def get_result(self, given):
         """
         数据库操作函数
@@ -138,6 +151,18 @@ class Operator:
 
         elif function == self.DELETE_FOLLOW:
             res = delete_follow(cont,session)
+
+        elif function == self.INSERT_CATEGORY:
+            res = insert_category(cont,session)
+
+        elif function == self.DELETE_CATEGORY:
+            res = delete_category(cont,session)
+
+        elif function == self.GET_ALL_CATEGORY:
+            res = get_all_category(session)
+
+        elif function == self.GET_QUESTION_BY_CAT:
+            res = get_question_by_cat(cont,session)
 
         session.close()
         if res["success"] is True:
