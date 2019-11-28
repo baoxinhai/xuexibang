@@ -46,7 +46,7 @@ class Operator:
         self.INSERT_QUESTION = 7
 
         # 获取问题
-        self.GET_QUESTION = 8
+        self.GET_QUESTION_BY_ID = 8
 
         # 插入答案
         self.INSERT_ANSWER = 9
@@ -122,7 +122,7 @@ class Operator:
         elif function == self.INSERT_QUESTION:
             res = insert_question(cont, session)
 
-        elif function == self.GET_QUESTION:
+        elif function == self.GET_QUESTION_BY_ID:
             res = get_question(cont, session)
 
         elif function == self.INSERT_ANSWER:
