@@ -11,14 +11,17 @@ from database.models.model_manager import get_engine
 from database.base.global_manager import *
 from database.base.user_manager import *
 from database.base.logger_manager import *
+
 from database.base.question_manager import *
 from database.base.answer_manager import  *
 from database.base.category_manager import *
+
 # 建立数据库引擎
 engine = get_engine()
 
 
 class Operator:
+
 
     def __init__(self):
         # 初始化数据库
@@ -56,6 +59,7 @@ class Operator:
 
         # 根据问题id获取问题所有答案
         self.GET_ANSWER_BY_QUID = 11
+
 
         # 根据用户id获取用户提出的所有问题
         self.GET_QUESTION_BY_UID = 12
@@ -163,6 +167,8 @@ class Operator:
 
         elif function == self.GET_QUESTION_BY_CAT:
             res = get_question_by_cat(cont,session)
+
+
 
         session.close()
         if res["success"] is True:

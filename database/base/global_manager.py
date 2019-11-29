@@ -40,6 +40,7 @@ def database_init(engine, session):
             res["status"] = 1000
             res["message"] = e.message
             res["content"] = "Database connect failed，please check database Schema's name"
+
             return res
         elif isinstance(e, RuntimeError):
             res["success"] = False

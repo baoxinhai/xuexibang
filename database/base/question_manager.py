@@ -3,15 +3,18 @@
 # python: 2.7
 # author: Wang Zhe
 # filename: question_manager.py
-# ±¾Ä£¿é°üº¬£º
-# ²»¶ÔÍâ¿É¼ûµÄÊı¾İ¿â²Ù×÷º¯Êı
+# æœ¬æ¨¡å—åŒ…å«ï¼š
+# ä¸å¯¹å¤–å¯è§çš„æ•°æ®åº“æ“ä½œå‡½æ•°
+
 
 from database.models.model import QuestionInfo, AnswerInfo
+
 
 
 def get_recommend_question(number, session):
     question_list = []
     res = {}
+
     try:
         question_info_list = session.query(QuestionInfo).limit(number["numeber"]).all()
 
