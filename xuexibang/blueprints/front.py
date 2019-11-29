@@ -19,7 +19,7 @@ from flask import render_template, flash, redirect, url_for, request, current_ap
 # from xuexibang.main.extensions import *
 #  from xuexibang.main.forms import QuestionForm
 
-from xuexibang.main.forms import HomeForm
+from xuexibang.main.forms import HomeForm, AnswerForm
 
 front_bp = Blueprint('front', __name__)
 
@@ -55,4 +55,8 @@ def myquestion():
 
 @front_bp.route('/qna', methods=['GET', 'POST'])
 def qna():  # 回答相应的问题
-    return render_template('front/qna.html')
+    form = AnswerForm()
+    if form.validate_on_submit():
+        answer=form.answer.data
+        return redirect(url_for('qna'))
+    return render_template('front/qna.html',data=['data'],form=form)

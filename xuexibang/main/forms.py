@@ -35,3 +35,16 @@ class HomeForm(FlaskForm):
     description = StringField('问题描述', validators=[DataRequired()])
     # 发布问题按钮
     submit = SubmitField('提交')
+
+
+class AnswerForm(FlaskForm):
+    # 回答问题文本框
+    answer = TextAreaField('答案', validators=[DataRequired()], render_kw={'placeholder': 'please input the answer'})
+    # 提交按钮
+    submit = SubmitField('提交')
+
+# 关注该问题表单
+# class FocusForm(FlaskForm):
+   # submit = SubmitField('关注问题')
+
+
