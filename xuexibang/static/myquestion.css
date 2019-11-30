@@ -1,0 +1,53 @@
+	* {
+		padding: 0;
+		margin: auto;
+	}
+	body {
+		width: 1000px;
+		/*background-color: #eee;   !*灰色背景*!*/
+	}
+
+	ul li {
+		list-style: none;
+	}
+	/*导航栏*/
+	nav {
+		width: 100%;
+		height: 60px;
+		border-bottom: 1px solid black;
+		background-color: white;
+	}
+	nav ul {
+		padding: 10px 30px;
+	}
+	nav li {
+		list-style: none;
+		float: left;       /*排成一行*/
+		margin: 10px 20px;
+	}
+
+
+
+	ul li a {
+		text-decoration: none;
+		color: black;
+	}
+
+	/*主体左边部分*/
+	main {
+		display: flex;
+		padding: 10px 50px;
+	}
+
+	.leftbar {
+		flex: 5;
+		border-right: 2px solid black;
+	}
+
+	.leftbar
+	.myq_container {
+		margin-top: 50px;
+	}
+	.rightbar {
+		flex: 2;
+	}

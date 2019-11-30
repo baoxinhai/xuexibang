@@ -4,32 +4,53 @@
 # filename: test.py
 # 本模块为接口测试模块
 from database.api.main_base import Operator
-from models.model import UserInfo
+from database.models.model import UserInfo
+import datetime
+
+
+def tmp():
+    res = {}
+    try:
+        res["success"] = True
+        res["status"] = 0
+        res["message"] = ""
+        res["content"] = None
+        return res
+
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1000
+        res["message"] = e.message
+        res["content"] = None
+        return res
+
 
 if __name__ == '__main__':
+
     o = Operator()
 
-    print(u"查询admin结果:")
-    user = o.get_result({"function": o.GET_UER_BY_NAME, "content": {"name": "admin"}})
-    print user["name"]
-    print user.name
+    print (o.get_result({"function":o.GET_ALL_CATEGORY,
+                         "content":{
+                             "catname":"math",
+                             "name":"admin",
+                             #"anscontent":"test",
+                             #"anstime":datetime.datetime.now(),
+                             "qucontent":"test",
+                             "qutitle":"test",
+                             "uid":2,
+                             #"quid":1,
+                             "qutime":datetime.datetime.now(),
+                             "catid":1,
+                             "number":3
+                         }}))
 
-    # print (u"删除admin结果:")
-    # print (o.get_result({"function": o.DELETE_USER_BY_NAME, "content": {"name": "admin"}}))
-
-    # print(u"查询admin结果:")
-    # print (o.get_result({"function": o.GET_UER_BY_NAME, "content": {"name": "admin"}}))
-
-    # print (u"插入admin结果:")
-    # print (o.get_result({"function": o.INSERT_USER, "content": {"name": "admin", "password": "12312313", "email": "1059150030@qq.com","admin":True}}))
-
-'''
-    print(u"查询admin结果:")
-    print (o.get_result({"function": o.GET_UER_BY_NAME, "content": {"name": "admin"}}))
-
-    print(u"修改admin密码结果:")
-    print (o.get_result({"function": o.UPDATE_USER_PWD, "content": {"name": "admin", "password": "wang"}}))
-
-    print(u"查询admin结果:")
-    print (o.get_result({"function": o.GET_UER_BY_NAME, "content": {"name": "admin"}}))
+    '''
+    print (o.get_result(({"function":o.INSERT_USER,
+                          "content":{
+                              "name":"test",
+                              "password":"test",
+                              "email":"test",
+                              "admin":False
+                          }})))
+ 
 '''

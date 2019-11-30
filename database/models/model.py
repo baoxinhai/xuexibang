@@ -4,9 +4,10 @@
 # filename: model.py
 # 本模块包含：
 # ORM模型
-from sqlalchemy import Column, Integer, String, DateTime,ForeignKey,Boolean
-from sqlalchemy.ext.declarative import declarative_base
 
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
+
+from sqlalchemy.ext.declarative import declarative_base
 
 BaseModel = declarative_base()
 
@@ -26,6 +27,10 @@ class ModelProcessor:
             _dict[filed] = getattr(self, filed)
         return _dict
 
+    def dict_init(self, dict):
+        for filed in self.__get_fields():
+            setattr(self, filed, dict.get(filed))
+
     def to_json(self):
         json = {}
         for col in self._sa_class_manager.mapper.mapped_table.columns:
@@ -40,26 +45,35 @@ class ModelProcessor:
     get_fields = __get_fields
 
 
+class Category(BaseModel, ModelProcessor):
+    __tablename__ = "Category"
+
+    catid = Column(Integer, nullable=False, primary_key=True)
+    catname = Column(String(32), nullable=False, unique=True)
+
+
 class UserInfo(BaseModel, ModelProcessor):
     __tablename__ = "UserInfo"
 
     uid = Column(Integer, primary_key=True)
-    name = Column(String(32), nullable=False,unique=True)
+
+    name = Column(String(32), nullable=False, unique=True)
     password = Column(String(32), nullable=False)
-    email = Column(String(32), nullable=False,unique=True)
-    admin=Column(Boolean,nullable=True)
+    email = Column(String(32), nullable=False, unique=True)
+    admin = Column(Boolean, nullable=True)
 
 
 class QuestionInfo(BaseModel, ModelProcessor):
     __tablename__ = "QuestionInfo"
 
     quid = Column(Integer, primary_key=True)
-    qtitle = Column(String(32), nullable=False)  # 增加了问题标题字段
     qucontent = Column(String(32), nullable=False)
-    qcategory = Column(Integer, nullable=False)  # 以及问题种类
+
+    qutitle = Column(String(32), nullable=False)
     qutime = Column(DateTime, nullable=False)
-    uid = Column(Integer, ForeignKey(UserInfo.uid) , nullable=False)
+    uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     ansid = Column(Integer, nullable=True)
+    catid = Column(Integer, ForeignKey(Category.catid, ondelete="SET NULL", onupdate="CASCADE"), nullable=True)
 
 
 class AnswerInfo(BaseModel, ModelProcessor):
@@ -68,12 +82,21 @@ class AnswerInfo(BaseModel, ModelProcessor):
     ansid = Column(Integer, primary_key=True)
     anscontent = Column(String(32), nullable=False)
     anstime = Column(DateTime, nullable=False)
-    uid = Column(Integer, ForeignKey(UserInfo.uid),nullable=False)
-    quid = Column(Integer, ForeignKey(QuestionInfo.uid), nullable=False)
+
+    uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    quid = Column(Integer, ForeignKey(QuestionInfo.quid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 
 
 class Follow(BaseModel, ModelProcessor):
     __tablename__ = "Follow"
 
-    uid = Column(Integer, index=False, nullable=False, primary_key=True)
-    quid = Column(Integer, index=False, nullable=False, primary_key=True)
+    uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False,
+                 primary_key=True)
+    quid = Column(Integer, ForeignKey(QuestionInfo.quid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False,
+                  primary_key=True)
+
+
+class Tmp:
+    def __init__(self, dict):
+        for key in dict:
+            setattr(Tmp, key, dict.get(key))

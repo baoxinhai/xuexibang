@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% from 'macros.html' import func %}
 
-</body>
-</html>
+{% block title %}问题详情页{% endblock %}
+
+{% block styles %}
+{#   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css' ) }}">#}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='qna.css' ) }}">
+{% endblock %}
+
+{% block content %}
+    <!-- 主体左边部分 -->
+    <div class="leftbar">
+        <form>
+            <h3>问题标题</h3>
+            <hr>
+            <p>问题描述</p>
+				<button name="focus_ques">关注该问题</button>
+        </form>
+        <div class="mya_container">
+            <div class="mya">回答1</div> <!-- 用for循环输出所有问题 -->
+
+        </div>
+    </div>
+
+    <!-- 主体右边部分 -->
+    <div class="rightbar">
+        <!-- 输入的回答表单 -->
+       <!-- <form class="ansform_container">
+            <div class="ansform_group">
+                <textarea name="answer" rows="10" class="form_control " placeholder="输入您的回答"></textarea>
+            </div>
+            <div class="ansform_group">
+                <button name="sub_ans">提交回答</button>
+            </div>
+        </form> -->
+        <form method="post">
+            <div class="ansform_container">
+                {{ form.csrf_token }}
+                <div class="ansform_group">
+                    {{ form.answer(class='form_control txtarea') }}
+                </div>
+                <div class="ansform_group">
+                    {{ form.submit(class='btn')}}
+                </div>
+            </div>
+        </form>
+
+    </div>
+{% endblock %}

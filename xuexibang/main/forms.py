@@ -25,13 +25,24 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Register')
 
 
-class PostQuestionForm(FlaskForm):
-    title = StringField('QTitle', validators=[DataRequired()], render_kw={'placeholder': 'question category'})
-    content = StringField('Content', validators=[DataRequired()], render_kw={'placeholder': 'question description'})
-    category = SelectField('Category', coerce=int, default=1) # 分类字段
-    submit = SubmitField('issue')
+class QuestionForm(FlaskForm):
+    content = StringField('Content', validators=[DataRequired()], render_kw={'placeholder': 'please input question description'})
+
+class HomeForm(FlaskForm):
+    # 问题标题
+    title = StringField('问题标题', validators=[DataRequired()])
+    # 问题描述
+    description = StringField('问题描述', validators=[DataRequired()])
+    # 发布问题按钮
+    submit = SubmitField('提交')
 
 
-class PostAnswerForm(FlaskForm):
-    answer = StringField('Answer', validators=[DataRequired()])
-    submit = SubmitField('issue')
+class AnswerForm(FlaskForm):
+    # 回答问题文本框
+    answer = TextAreaField('答案', validators=[DataRequired()], render_kw={'placeholder': 'please input the answer'})
+    # 提交按钮
+    submit = SubmitField('提交')
+
+# 关注该问题表单
+# class FocusForm(FlaskForm):
+   # submit = SubmitField('关注问题')
