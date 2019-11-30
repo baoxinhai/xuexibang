@@ -5,3 +5,5 @@ __author__ = 'Jinyang Shao'
 '''
 用于生成虚拟数据
 '''
+
+from faker import Faker

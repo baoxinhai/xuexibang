@@ -4,8 +4,9 @@
 # filename: test.py
 # 本模块为接口测试模块
 from database.api.main_base import Operator
-from database.models.model import UserInfo
+from database.models.model import UserInfo, QuestionInfo
 import datetime
+from faker import Faker
 
 
 def tmp():
@@ -28,6 +29,15 @@ def tmp():
 if __name__ == '__main__':
 
     o = Operator()
+    u = UserInfo(name="哈哈", password="123", email="test@163.com", admin=False)
+    print o.get_result({"function":o.INSERT_USER,
+                        "content": u.to_dict()})
+
+    # q = QuestionInfo(qucontent=u"my content question", qutitle=u"my question title", qutime=datetime.datetime.now(), uid=1)
+
+    # ret = o.get_result({"function": o.INSERT_QUESTION,
+                       #  "content": q.to_dict()})
+    # print ret
 
     print (o.get_result({"function":o.GET_ALL_CATEGORY,
                          "content":{
