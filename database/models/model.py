@@ -54,7 +54,9 @@ class QuestionInfo(BaseModel, ModelProcessor):
     __tablename__ = "QuestionInfo"
 
     quid = Column(Integer, primary_key=True)
+    qtitle = Column(String(32), nullable=False)  # 增加了问题标题字段
     qucontent = Column(String(32), nullable=False)
+    qcategory = Column(Integer, nullable=False)  # 以及问题种类
     qutime = Column(DateTime, nullable=False)
     uid = Column(Integer, ForeignKey(UserInfo.uid) , nullable=False)
     ansid = Column(Integer, nullable=True)
