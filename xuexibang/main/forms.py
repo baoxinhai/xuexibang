@@ -5,7 +5,7 @@ from flask_ckeditor import CKEditorField  # 富文本编辑器
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, PasswordField, BooleanField, IntegerField, \
-    TextAreaField, SubmitField, MultipleFileField
+    TextAreaField, SubmitField, MultipleFileField, SelectField
 from wtforms.validators import DataRequired, Length, ValidationError, Email
 
 
@@ -28,6 +28,7 @@ class RegisterForm(FlaskForm):
 class QuestionForm(FlaskForm):
     content = StringField('Content', validators=[DataRequired()], render_kw={'placeholder': 'please input question description'})
 
+
 class HomeForm(FlaskForm):
     # 问题标题
     title = StringField('问题标题', validators=[DataRequired()])
@@ -46,5 +47,3 @@ class AnswerForm(FlaskForm):
 # 关注该问题表单
 # class FocusForm(FlaskForm):
    # submit = SubmitField('关注问题')
-
-

@@ -84,7 +84,7 @@ def register_commands(app):
         if drop:
             click.confirm('This operation will delete the database, do you want to continue?', abort=True)
             # 删除所有表并重新建表
-            db.get_result({"function": DATABASE_INIT, "content": "","dev":True})
+            db.get_result({"function": db.DATABASE_INIT, "content": "","dev":True})
             click.echo('Drop tables.')
         click.echo('Initialized database.')
 

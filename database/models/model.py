@@ -51,6 +51,10 @@ class Category(BaseModel, ModelProcessor):
     catid = Column(Integer, nullable=False, primary_key=True)
     catname = Column(String(32), nullable=False, unique=True)
 
+    __table_args__ = {
+        'mysql_charset':'utf8'
+    }
+
 
 class UserInfo(BaseModel, ModelProcessor):
     __tablename__ = "UserInfo"
@@ -61,7 +65,9 @@ class UserInfo(BaseModel, ModelProcessor):
     password = Column(String(32), nullable=False)
     email = Column(String(32), nullable=False, unique=True)
     admin = Column(Boolean, nullable=True)
-
+    __table_args__ = {
+        'mysql_charset': 'utf8'
+    }
 
 
 class QuestionInfo(BaseModel, ModelProcessor):
@@ -75,7 +81,9 @@ class QuestionInfo(BaseModel, ModelProcessor):
     uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     ansid = Column(Integer, nullable=True)
     catid = Column(Integer, ForeignKey(Category.catid, ondelete="SET NULL", onupdate="CASCADE"), nullable=True)
-
+    __table_args__ = {
+        'mysql_charset': 'utf8'
+    }
 
 
 class AnswerInfo(BaseModel, ModelProcessor):
@@ -87,21 +95,24 @@ class AnswerInfo(BaseModel, ModelProcessor):
 
     uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     quid = Column(Integer, ForeignKey(QuestionInfo.quid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
-
+    __table_args__ = {
+        'mysql_charset': 'utf8'
+    }
 
 
 class Follow(BaseModel, ModelProcessor):
     __tablename__ = "Follow"
 
-
     uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False,
                  primary_key=True)
     quid = Column(Integer, ForeignKey(QuestionInfo.quid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False,
                   primary_key=True)
+    __table_args__ = {
+        'mysql_charset': 'utf8'
+    }
 
 
 class Tmp:
     def __init__(self, dict):
         for key in dict:
             setattr(Tmp, key, dict.get(key))
-
