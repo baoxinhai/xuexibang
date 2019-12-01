@@ -74,7 +74,7 @@ class QuestionInfo(BaseModel, ModelProcessor):
     __tablename__ = "QuestionInfo"
 
     quid = Column(Integer, primary_key=True)
-    qucontent = Column(String(32), nullable=False)
+    qucontent = Column(String(128), nullable=False)
 
     qutitle = Column(String(32), nullable=False)
     qutime = Column(DateTime, nullable=False)
@@ -90,7 +90,7 @@ class AnswerInfo(BaseModel, ModelProcessor):
     __tablename__ = "AnswerInfo"
 
     ansid = Column(Integer, primary_key=True)
-    anscontent = Column(String(32), nullable=False)
+    anscontent = Column(String(128), nullable=False)
     anstime = Column(DateTime, nullable=False)
 
     uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)

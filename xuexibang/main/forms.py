@@ -8,6 +8,8 @@ from wtforms import StringField, PasswordField, BooleanField, IntegerField, \
     TextAreaField, SubmitField, MultipleFileField, SelectField
 from wtforms.validators import DataRequired, Length, ValidationError, Email
 
+from extensions import db
+
 
 class LoginForm(FlaskForm):
     # 使用render_kw来为表单项增加属性placeholder
@@ -25,17 +27,21 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Register')
 
 
-class QuestionForm(FlaskForm):
-    content = StringField('Content', validators=[DataRequired()], render_kw={'placeholder': 'please input question description'})
-
-
 class HomeForm(FlaskForm):
     # 问题标题
     title = StringField('问题标题', validators=[DataRequired()])
+    # 问题分类
+    category = SelectField('问题种类', coerce=int, default=1)
     # 问题描述
     description = StringField('问题描述', validators=[DataRequired()])
     # 发布问题按钮
     submit = SubmitField('提交')
+
+    def __init__(self, *args, **kwargs):
+        super(HomeForm, self).__init__(*args, **kwargs)
+        categories = db.get_result({"function":db.GET_ALL_CATEGORY})
+        self.category.choices = [(catid, catname)
+                                 for catid, catname in categories["content"].iteritems()]
 
 
 class AnswerForm(FlaskForm):

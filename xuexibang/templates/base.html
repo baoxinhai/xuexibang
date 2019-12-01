@@ -11,6 +11,7 @@
     {% endblock %}
 </head>
 <body>
+{% block nav %}
 <nav> <!--导航栏-->
 {#    <ul><li><a href="{{ url_for('front.home') }}">Home</a></li></ul>#}
 
@@ -27,21 +28,26 @@
     </ul>
 
 </nav>
+{% endblock nav %}
 
-<main>
-{#    {% for message in get_flashed_messages() %}#}
-{#        <div class="alert">{{ message }}</div>#}
-{#    {% endfor %}#}
+<main class="container">
+{% for message in get_flashed_messages(with_categories=True) %}
+<div class="alert alert-{{ message[0] }}" role="alert">
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+           {{ message[1] }}
+       </div>
+{% endfor %}
     {% block content %}{% endblock %}
-</main>
-<footer>
     {% block footer %}
+<footer>
         <small> &copy; 2019 <a href="https://blog.csdn.net/weixin_44617992/article/details/102926000" title="Written by Sjy">Victor Shao</a> /
             <a href="https://github.com/Sugar-Coder/xuexibang.git" title="Fork me on GitHub">GitHub</a> /
             <a href="http://helloflask.com" title="A Flask project">QnAWebApp development base on the book</a>
         </small>
-    {% endblock %}
 </footer>
+    {% endblock footer %}
+</main>
+
 {% block scripts %}{% endblock %}
 </body>
 </html>

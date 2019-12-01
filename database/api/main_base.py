@@ -171,10 +171,13 @@ class Operator:
 
 
         session.close()
-        if res["success"] is True:
-            Logger.info(res["message"])
+        if res and res["success"] is True:
+            Logger.info(res["content"])
         else:
-            Logger.error(res["message"])
+            if res:
+                Logger.error(res["content"])
+            else:
+                Logger.error('empty res!')
         return res
 
 
