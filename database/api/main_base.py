@@ -13,7 +13,7 @@ from database.base.user_manager import *
 from database.base.logger_manager import *
 
 from database.base.question_manager import *
-from database.base.answer_manager import  *
+from database.base.answer_manager import *
 from database.base.category_manager import *
 
 # 建立数据库引擎
@@ -21,7 +21,6 @@ engine = get_engine()
 
 
 class Operator:
-
 
     def __init__(self):
         # 初始化数据库
@@ -60,7 +59,6 @@ class Operator:
         # 根据问题id获取问题所有答案
         self.GET_ANSWER_BY_QUID = 11
 
-
         # 根据用户id获取用户提出的所有问题
         self.GET_QUESTION_BY_UID = 12
 
@@ -68,7 +66,7 @@ class Operator:
         self.GET_ANSWER_BY_UID = 13
 
         # 根据答案id删除答案
-        self.DELETE_ASNWER_BY_ID = 14
+        self.DELETE_ANSWER_BY_ID = 14
 
         # 根据问题id删除问题
         self.DELETE_QUESTION_BY_ID = 15
@@ -90,6 +88,7 @@ class Operator:
 
         # 根据分类查询问题
         self.GET_QUESTION_BY_CAT = 21
+
     def get_result(self, given):
         """
         数据库操作函数
@@ -139,36 +138,37 @@ class Operator:
             res = get_answer_by_quid(cont, session)
 
         elif function == self.GET_QUESTION_BY_UID:
-            res = get_question_by_uid(cont,session)
+            res = get_question_by_uid(cont, session)
 
         elif function == self.GET_ANSWER_BY_UID:
-            res = get_answer_by_uid(cont,session)
+            res = get_answer_by_uid(cont, session)
 
-        elif function == self.DELETE_ASNWER_BY_ID:
-            res = delete_answer_by_id(cont,session)
+        elif function == self.DELETE_ANSWER_BY_ID:
+            res = delete_answer_by_id(cont, session)
 
         elif function == self.DELETE_QUESTION_BY_ID:
-            res = delete_question_by_id(cont,session)
+            res = delete_question_by_id(cont, session)
 
         elif function == self.INSERT_FOLLOW:
-            res = insert_follow(cont,session)
+            res = insert_follow(cont, session)
 
         elif function == self.DELETE_FOLLOW:
-            res = delete_follow(cont,session)
+            res = delete_follow(cont, session)
 
         elif function == self.INSERT_CATEGORY:
-            res = insert_category(cont,session)
+            res = insert_category(cont, session)
 
         elif function == self.DELETE_CATEGORY:
-            res = delete_category(cont,session)
+            res = delete_category(cont, session)
 
         elif function == self.GET_ALL_CATEGORY:
             res = get_all_category(session)
 
         elif function == self.GET_QUESTION_BY_CAT:
-            res = get_question_by_cat(cont,session)
+            res = get_question_by_cat(cont, session)
 
-
+        elif function == self.GET_USER_FOLLOW:
+            res = get_user_follow(cont, session)
 
         session.close()
         if res and res["success"] is True:
