@@ -1,5 +1,4 @@
-
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿**Interface documents ：**
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿**Interface documents ：**
 
 使用database模块的用户只需关心database.api.Operator.get\_result( self , given )函数即可，实例化一个Operator对象，通过调用其get\_result函数完成对数据库的操作。
 ##
@@ -138,3 +137,4 @@
 
 
 
+>>>>>>> upstream/develop
