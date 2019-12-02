@@ -31,16 +31,12 @@
         </div>
 
 			<!-- 问题显示区 -->
-        <div class="ques_container">
-            {% for context in contexts %}
-                <div class="ques">
-                    <a href="{{ url_for('front.qna') }}">{{ context.outlines }}</a>
+        <div class="row">
+                <div class="ques_container">
+                    {% include 'front/_question.html' %}
                 </div>
-            {% endfor %}
-            <a href="{{ url_for('front.qna') }}">输出问题标题</a>
-			</div>
-
-		</div>
+        </div>
+     </div>
 
 		<div class="col-sm-4 sidebar">
 			{% include 'front/_sidebar.html' %}

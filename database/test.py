@@ -31,6 +31,14 @@ def tmp():
 if __name__ == '__main__':
 
     o = Operator()
+
+    ret = o.get_result({"function": o.GET_ALL_CATEGORY})["content"]
+    print ret
+
+    #ret = o.get_result({"function": o.GET_RECOMMEND_QUESTION, "content": {"number": 5}})
+    #for ques in ret["content"]:
+    #   print ques["qutitle"], ques["quid"]  #   ques是一个dict对象
+
     # u = UserInfo(name="哈哈", password="123", email="test@163.com", admin=False)
     # print o.get_result({"function":o.INSERT_USER,
                        #  "content": u.to_dict()})
@@ -40,7 +48,7 @@ if __name__ == '__main__':
     # ret = o.get_result({"function": o.INSERT_QUESTION,
     #                      "content": q.to_dict()})
     # print ret
-
+'''
     ret = o.get_result({"function":o.GET_ALL_CATEGORY})
 
     for k, v in ret["content"].iteritems():
@@ -50,7 +58,6 @@ if __name__ == '__main__':
     else:
         print "no data"
 
-    '''
     print (o.get_result(({"function":o.INSERT_USER,
                           "content":{
                               "name":"test",

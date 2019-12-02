@@ -68,8 +68,8 @@ def fake_follow(uid=2):  # 待完成
     quid = random.randint(1, 9)
     follow = Follow(uid=uid,
                     quid=quid)
-    ret = db.get_result({"function" : db.GET_USER_FOLLOW, "content": follow.to_dict()})
-    click.echo("generate follow uid=%d, quid=%d" % (uid, quid))
+    ret = db.get_result({"function" : db.INSERT_FOLLOW, "content": follow.to_dict()})
+    click.echo("generate follow uid=%d, quid=%d, %s" % (uid, quid, ret["success"]))
 
 
 if __name__ == "__main__":

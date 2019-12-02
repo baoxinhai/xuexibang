@@ -125,6 +125,9 @@ class Operator:
         elif function == self.INSERT_QUESTION:
             res = insert_question(cont, session)
 
+        elif function == self.GET_RECOMMEND_QUESTION:
+            res = get_recommend_question(cont,session)
+
         elif function == self.GET_QUESTION_BY_ID:
             res = get_question(cont, session)
 
@@ -171,13 +174,10 @@ class Operator:
             res = get_user_follow(cont, session)
 
         session.close()
-        if res and res["success"] is True:
-            Logger.info(res["content"])
+        if res["success"] is True:
+            Logger.info(res["message"])
         else:
-            if res:
-                Logger.error(res["content"])
-            else:
-                Logger.error('empty res!')
+            Logger.error(res["message"])
         return res
 
 

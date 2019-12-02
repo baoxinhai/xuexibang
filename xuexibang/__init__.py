@@ -63,7 +63,8 @@ def register_shell_context(app):
 def register_template_context(app):
     @app.context_processor
     def make_template_context():
-        categories = db.get_result({"function": db.GET_ALL_CATEGORY})  # 用于显示边栏
+        categories = db.get_result({"function": db.GET_ALL_CATEGORY})["content"]  # 用于显示边栏
+        return dict(categories=categories)
 
 
 def register_errors(app):
