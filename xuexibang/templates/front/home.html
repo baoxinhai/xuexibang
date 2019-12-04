@@ -18,15 +18,18 @@
                     {{ form.csrf_token }}
                     <div class="form_group">
                         {{ form.title.label}}<br>
-                        {{ form.title ( class='form_control' )}}<br><!-- 问题标题 -->
+                        {{ form.title ( class='form-control' )}}<br><!-- 问题标题 -->
                     </div>
                     <div class="form_group">
                         {{ form.description.label }}
-                        {{ form.description(class='form_control description')}}<br> <!-- 问题描述 -->
+                        {{ form.description(class='form-control description')}}<br> <!-- 问题描述 -->
+                    </div>
+                </div>
+                    <div class="form_group">
+                        {{ form.category.label }}
+                        {{ form.category(class='form-check-input') }}
                     </div>
                         {{ form.submit(class='btn') }}<br>  <!-- 发布问题按钮 -->
-
-                </div>
 			</form>
         </div>
 
