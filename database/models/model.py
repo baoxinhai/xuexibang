@@ -6,8 +6,9 @@
 # ORM模型
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
-
+from database.models.model_manager import get_session
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import event
 
 BaseModel = declarative_base()
 
@@ -54,10 +55,6 @@ class Category(BaseModel, ModelProcessor):
         'mysql_charset': 'UTF8MB4'
     }
 
-    __table_args__ = {
-        'mysql_charset':'utf8'
-    }
-
 
 class UserInfo(BaseModel, ModelProcessor):
     __tablename__ = "UserInfo"
@@ -86,6 +83,7 @@ class QuestionInfo(BaseModel, ModelProcessor):
     uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     ansid = Column(Integer, nullable=True)
     catid = Column(Integer, ForeignKey(Category.catid, ondelete="SET NULL", onupdate="CASCADE"), nullable=True)
+    ansnumber = Column(Integer, nullable=False)
     __table_args__ = {
 
         'mysql_charset': 'UTF8MB4'
@@ -116,9 +114,6 @@ class Follow(BaseModel, ModelProcessor):
                  primary_key=True)
     quid = Column(Integer, ForeignKey(QuestionInfo.quid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False,
                   primary_key=True)
-    __table_args__ = {
-        'mysql_charset': 'utf8'
-    }
 
     __table_args__ = {
         'mysql_charset': 'UTF8MB4'
