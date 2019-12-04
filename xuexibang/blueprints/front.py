@@ -42,7 +42,8 @@ def home():
                 qutitle=title,
                 uid=userid,  # 提问者id
                 qutime=datetime.datetime.now(),
-                catid=category
+                catid=category,
+                ansnumber=0
             )
             db.get_result({"function" : db.INSERT_QUESTION, "content" : question.to_dict()})
             flash("提交问题成功！", "success")
