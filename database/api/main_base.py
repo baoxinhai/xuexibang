@@ -89,6 +89,9 @@ class Operator:
         # 根据分类查询问题
         self.GET_QUESTION_BY_CAT = 21
 
+        # 根据用户id获取用户信息
+        self.GET_USER_BY_ID = 22
+
     def get_result(self, given):
         """
         数据库操作函数
@@ -169,6 +172,9 @@ class Operator:
 
         elif function == self.GET_USER_FOLLOW:
             res = get_user_follow(cont, session)
+
+        elif function == self.GET_USER_BY_ID:
+            res = get_user_by_id(cont,session)
 
         session.close()
         if res["success"] is True:
