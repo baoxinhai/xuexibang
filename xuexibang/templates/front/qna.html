@@ -5,22 +5,44 @@
 
 {% block styles %}
 {#   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css' ) }}">#}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='qna.css' ) }}">
+{#    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='qna.css' ) }}"> #}
 {% endblock %}
 
 {% block content %}
     <!-- 主体左边部分 -->
-    <div class="leftbar">
-        <form>
-            <h3>问题标题</h3>
+    <div class="page-header">
+        <h1>{{ question['qutitle'] }}
+            <span class="float-right"></span>
+        </h1>
+        <hr>
+        <small>
+            Categoty: <a
+                    href="{{ url_for('front.show_category', category_id=question['catid']) }}"> {{
+                        categories[question['catid']] }}</a><br>
+            Date: {{ question['qutime'] }}
+        </small>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <p>{{ question['qucontent'] | safe }}</p>
             <hr>
-            <p>问题描述</p>
-				<button name="focus_ques">关注该问题</button>
-        </form>
-        <div class="mya_container">
-            <div class="mya">回答1</div> <!-- 用for循环输出所有问题 -->
-
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".postLinkModal">Share
+            </button>
         </div>
+    </div>
+    <div class="answers" id="answers">
+        <h3>共有 {{ answers|length }} 个回答</h3>
+        <hr>
+        {% if answers %}
+         <ul class="list-group">
+             {% for answer in answers %}
+               <li>用户：{{ answer['uid'] }} 作出的回答</li>
+               <p>{{ answer['anscontent'] }}</p>
+             {% endfor %}
+         </ul>
+        {% else %}
+            <div class="tip"><h5>No comments.</h5></div>
+        {% endif %}
     </div>
 
     <!-- 主体右边部分 -->

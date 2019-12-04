@@ -45,7 +45,8 @@ def fake_qna(count=10):
             qutitle=fake.sentence(),
             uid=2,  # 提问者id
             qutime=fake.date_time_this_year(),
-            catid=random.randint(1,5)
+            catid=random.randint(1,5),
+            ansnumber=0   # 设置成0，之后触发器来修改
         )
         ret = db.get_result({"function" : db.INSERT_QUESTION, "content" : question.to_dict()})
         click.echo(ret["success"])
