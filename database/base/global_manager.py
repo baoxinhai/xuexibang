@@ -20,6 +20,13 @@ def database_init(engine, session):
         # 创建由BaseModel生成的所有表类
         BaseModel.metadata.create_all(engine)
 
+        # 创建触发器
+        session.execute('''CREATE TRIGGER ansnumber_update
+                            AFTER INSERT ON answerinfo
+                            for each row
+                            update questioninfo
+                            set ansnumber = ansnumber + 1
+                            where quid = NEW.quid;''')
         # 创建管理员
         admin = UserInfo(name='admin', password='123123', email='1059150030@qq.com',admin=True)
 
