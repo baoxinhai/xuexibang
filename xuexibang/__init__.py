@@ -93,13 +93,31 @@ def register_commands(app):
             click.echo('Drop tables.')
         click.echo('Initialized database.')
 
+
+    @app.cli.command()
+    @click.option('--username', prompt=True, help='The administrator\'s name used to login.')
+    @click.option('--email', prompt=True, help='The email:')
+    @click.option('--password', prompt=True, hide_input=True,
+                  confirmation_prompt=True, help='The password used to login.')
+    def init(username, email, password):
+        from database.models.model import UserInfo
+        click.echo('Initializing the database...')
+        db.get_result({"function": db.DATABASE_INIT, "content": "", "dev": True})
+
+        click.echo('Creating the temporary administrator account...')
+        admin=UserInfo(name=username, email=email, admin=True)
+        admin.set_password(password)
+        db.get_result({"function":db.INSERT_USER, "content":admin.to_dict()})
+        click.echo('Done.')
+
     @app.cli.command()
     @click.option('--category', default=5, help='Quantity of question\'s categoty, 5 kinds')
     @click.option('--qna', default=10, help='Generate questions and their answers, 10 questions')
     @click.option('--follow', default=1, help='Generate user id=1 \'s follow')
     def forge(category, qna, follow):
         from xuexibang.main.fakes import fake_category, fake_follow, fake_qna, fake_user
-        db.get_result({"function": db.DATABASE_INIT, "content": "", "dev":True})
+        # 初始化数据库放到了init选项中
+        # db.get_result({"function": db.DATABASE_INIT, "content": "", "dev":True})
 
         click.echo('Generating the user..')
         fake_user()

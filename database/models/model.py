@@ -10,6 +10,8 @@ from database.models.model_manager import get_session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import event
 
+from werkzeug.security import generate_password_hash, check_password_hash
+
 BaseModel = declarative_base()
 
 
@@ -62,7 +64,7 @@ class UserInfo(BaseModel, ModelProcessor):
     uid = Column(Integer, primary_key=True)
 
     name = Column(String(32), nullable=False, unique=True)
-    password = Column(String(32), nullable=False)
+    password_hash = Column(String(128), nullable=False)
     email = Column(String(32), nullable=False, unique=True)
     admin = Column(Boolean, nullable=True)
     __table_args__ = {
@@ -70,6 +72,12 @@ class UserInfo(BaseModel, ModelProcessor):
         'mysql_charset': 'UTF8MB4'
 
     }
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def validate_password(self, password):
+        return check_password_hash(password)
 
 
 class QuestionInfo(BaseModel, ModelProcessor):
