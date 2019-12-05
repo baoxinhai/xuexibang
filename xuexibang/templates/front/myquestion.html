@@ -9,32 +9,17 @@
 
 {% block content %}
 
-     <div class="leftbar">
-
+     <div class="row">
          <h3>我发布的问题</h3>
-         <div class="myq_container">
-             {% for question in questions %}
-                <div class="ques">
-                {#  输出用户关注的问题#}
-                    <a href="{{ url_for('front.qna') }}">{{ question.title }}</a>
+         <div class="row">
+                <div class="ques_container">
+                    {% include 'front/_question.html' %}
                 </div>
-             {% endfor %}
-
-{#           <div class="myq"><a href="{{ url_for('front.qna')}}">问题</a>  #}
-
-         </div>
-
-
+        </div>
      </div>
 
-    <div class="rightbar">
-        <ul>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-        </ul>
+    <div class="col-sm-4 sidebar">
+			{% include 'front/_sidebar.html' %}
     </div>
 
 {% endblock %}

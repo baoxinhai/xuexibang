@@ -6,7 +6,7 @@
             <small><a href="{{ url_for('front.show_question', question_id=ques['quid']) }}">Read More</a></small>
         </p>
         <small>
-            Comments: <a href="{{ url_for('front.show_question', question_id=ques['quid']) }}#comments">{{ ques['ansid'] }}</a>&nbsp;&nbsp;
+            Comments: <a href="{{ url_for('front.show_question', question_id=ques['quid']) }}#comments">{{ ques['ansnumber'] }}</a>&nbsp;&nbsp;
             Category: <a
                 href="{{ url_for('front.show_category', category_id=ques['catid']) }}">{{ categories[ques['catid']] }}</a>
             <span class="float-right">{{ moment(ques['qutime']).format('LL') }}</span> <!--categoried是模板上下文变量 -->
@@ -18,10 +18,5 @@
 {% else %}
     <div class="tip">
         <h5>No posts yet.</h5>
-        <!--
-        {% if current_user.is_authenticated %}
-        <a href="{{ url_for('admin.new_post') }}">Write Now</a>
-        {% endif %}
-        -->
     </div>
 {% endif %}
