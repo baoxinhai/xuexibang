@@ -1,10 +1,13 @@
 	* {
 		padding: 0;
-		margin: auto;
+
 	}
 	body {
         width: 1000px;
-		/*background-color: #eee;   灰色背景 */
+		margin: auto;
+	}
+	ul li {
+		list-style: none;
 	}
 	/*导航栏*/
 	nav {
@@ -18,7 +21,7 @@
 	}
 	nav li {
 		list-style: none;
-		float: left;       /*排成一行*/
+		float: left;
 		margin: 10px 20px;
 	}
 
@@ -30,29 +33,46 @@
 	/*主体左边部分*/
 	main {
 		display: flex;
-		/*padding: 10px 50px;*/
 	}
 
 	.leftbar {
 		flex: 3;
-		/*border-right: 1px solid black;*/
 		margin: 10px 0;
 	}
 
 	/*.leftbar */
 	.mya_container {
-		margin-top: 50px;
+		margin-top: 20px;
 	}
 
-	.leftbar form {
-		text-align: right;
-	}
+	/*.leftbar form {*/
+		/*text-align: right;*/
+	/*}*/
 
-	.leftbar h3 ,
-	.leftbar p
+	.leftbar h1
 	{
 		text-align: left;
 		line-height: 40px;
+	}
+
+	/*标题下面小字右对齐
+	.page-header small{
+		text-align: right;
+		text-decoration: none;
+	}*/
+
+	/*取消超链接的下划线*/
+	.page-header small a {
+		text-decoration: none;
+	}
+
+	/*问题描述文字样式*/
+	.leftbar .col-sm-8 p {
+		line-height: 20px;
+	}
+
+	.mya_container p {
+		line-height: 25px;
 	}
 
 	.rightbar {

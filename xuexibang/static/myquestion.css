@@ -1,10 +1,9 @@
 	* {
 		padding: 0;
-		margin: auto;
 	}
 	body {
 		width: 1000px;
-		/*background-color: #eee;   !*灰色背景*!*/
+		margin: auto;
 	}
 
 	ul li {
