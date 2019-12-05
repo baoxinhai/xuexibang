@@ -11,18 +11,9 @@
 	}
 	/*导航栏*/
 	nav {
-		width: 100%;
-		height: 60px;
+		width: 1000px;
 		border-bottom: 1px solid black;
 		background-color: white;
-	}
-	nav ul {
-		padding: 10px 30px;
-	}
-	nav li {
-		list-style: none;
-		float: left;
-		margin: 10px 20px;
 	}
 
 	ul li a {
@@ -35,9 +26,11 @@
 		display: flex;
 	}
 
+	.container {
+		width: 1000px;
+	}
 	.leftbar {
 		flex: 3;
-		margin: 10px 0;
 	}
 
 	/*.leftbar */
@@ -45,9 +38,6 @@
 		margin-top: 20px;
 	}
 
-	/*.leftbar form {*/
-		/*text-align: right;*/
-	/*}*/
 
 	.leftbar h1
 	{
@@ -55,12 +45,9 @@
 		line-height: 40px;
 	}
 
-	/*标题下面小字右对齐
-	.page-header small{
-		text-align: right;
-		text-decoration: none;
-	}*/
-
+	.page-header {
+		margin: 0;
+	}
 	/*取消超链接的下划线*/
 	.page-header small a {
 		text-decoration: none;
@@ -94,17 +81,18 @@
 
 	/*提交按钮样式*/
 	.ansform_container .btn {
-		width: 40px;
-		height: 27px;
+		width: 50px;
+		height: 30px;
+		text-align: center;
 		margin: 0 auto;
 	}
 
-footer {
-    font-size: 13px;
-    color: #888;
-    border-top: 1px solid #eee;
-    margin-top: 25px;
-    text-align: center;
-    padding: 10px;
+	footer {
+		font-size: 13px;
+		color: #888;
+		border-top: 1px solid #eee;
+		margin-top: 25px;
+		text-align: center;
+		padding: 10px;
 
-}
+	}
