@@ -1,38 +1,27 @@
 /*home.html*/
-* {
-	padding: 0;
-	margin: auto;
-}
 
 body {
 	width: 1000px;
 	margin: auto;
 }
 nav {
-	width: 100%;
-	height: 60px;
+	width: 1000px;
+	/*height: 60px;*/
 	border-bottom: 1px solid black;
 	background-color: white;
 }
-nav ul {
-	padding: 10px 30px;
-}
 
-nav li {
+/*nav li {
 	list-style: none;
-	float: left;       /*!*排成一行*!*/
+	float: left;       /*!*排成一行*!
 	margin: 10px 20px;
 }
 
-nav li:nth-child(6)
-{
-	margin-left: 700px;
-}
 
 ul li a {
 	text-decoration: none;
 	color: black;
-}
+}*/
 
 	form {
 		margin-bottom: 5px;
@@ -43,6 +32,9 @@ ul li a {
 		display: flex;
 	}
 
+	.container{
+		width: 1000px;
+	}
 	main .leftbar {
 		flex: 4;
 
@@ -94,12 +86,15 @@ ul li a {
 		overflow: hidden;
 	}
 
-footer {
-    font-size: 13px;
-    color: #888;
-    border-top: 1px solid #eee;
-    margin-top: 25px;
-    text-align: center;
-    padding: 10px;
+	.row{
+		margin-left: 0;
+	}
+	footer {
+		font-size: 13px;
+		color: #888;
+		border-top: 1px solid #eee;
+		margin-top: 25px;
+		text-align: center;
+		padding: 10px;
 
-}
+	}
