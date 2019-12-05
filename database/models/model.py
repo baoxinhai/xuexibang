@@ -10,7 +10,9 @@ from database.models.model_manager import get_session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import event
 
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash  # 用于密码hash
+
+from flask_login import UserMixin
 
 BaseModel = declarative_base()
 
@@ -58,7 +60,7 @@ class Category(BaseModel, ModelProcessor):
     }
 
 
-class UserInfo(BaseModel, ModelProcessor):
+class UserInfo(BaseModel, ModelProcessor, UserMixin):
     __tablename__ = "UserInfo"
 
     uid = Column(Integer, primary_key=True)
@@ -73,11 +75,14 @@ class UserInfo(BaseModel, ModelProcessor):
 
     }
 
+    def get_id(self):
+        return self.uid
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
     def validate_password(self, password):
-        return check_password_hash(password)
+        return check_password_hash(self.password_hash, password)
 
 
 class QuestionInfo(BaseModel, ModelProcessor):

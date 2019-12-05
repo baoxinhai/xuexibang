@@ -15,6 +15,7 @@ __author__ = 'Jinyang Shao'
 '''
 
 from flask import render_template, flash, redirect, url_for, request, current_app, Blueprint, abort, make_response
+from flask_login import current_user
 
 from xuexibang.main.extensions import db
 from xuexibang.main.forms import HomeForm, AnswerForm
@@ -23,8 +24,8 @@ from database.models.model import QuestionInfo, AnswerInfo
 front_bp = Blueprint('front', __name__)
 
 
-class current_user:
-    is_authenticated = True
+# class current_user:
+    # is_authenticated = True
 
 
 @front_bp.route('/home', methods=['GET', 'POST'])

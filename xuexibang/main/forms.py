@@ -14,7 +14,7 @@ from extensions import db
 class LoginForm(FlaskForm):
     # 使用render_kw来为表单项增加属性placeholder
     username = StringField('Username', validators=[DataRequired()], render_kw={'placeholder': 'username'})
-    password = PasswordField('Password', validators=[DataRequired(), Length(6, 30)], render_kw={'placeholder': '>=6'})
+    password = PasswordField('Password', validators=[DataRequired(), Length(3, 30)], render_kw={'placeholder': '>=3'})
     remember = BooleanField('Remember me')
     submit = SubmitField('Log in')
 

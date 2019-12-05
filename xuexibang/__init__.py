@@ -8,7 +8,7 @@ from flask import Flask, render_template
 from xuexibang.blueprints.auth import auth_bp
 from xuexibang.blueprints.front import front_bp
 from xuexibang.blueprints.dashboard import dashboard_bp
-from xuexibang.main.extensions import bootstrap, db, ckeditor, moment, mail
+from xuexibang.main.extensions import bootstrap, db, ckeditor, moment, mail, login_manager
 from xuexibang.settings import config
 
 
@@ -37,9 +37,7 @@ def register_logging(app):
 
 def register_extensions(app):
     bootstrap.init_app(app)
-    # need?
-    # db.init_app(app)
-
+    login_manager.init_app(app)
     ckeditor.init_app(app)
     mail.init_app(app)
     moment.init_app(app)

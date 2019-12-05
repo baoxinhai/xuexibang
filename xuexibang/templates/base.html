@@ -22,8 +22,12 @@
 			<li> <a href="{{ url_for('front.myquestion', user_id=2) }} ">我发布的问题</a></li>
 		    <li><a href="{{ url_for('front.home') }}">我回答的问题</a></li>   {#!链接#}
 			<li><a href="{{ url_for('front.home') }}" >我关注的问题</a></li>
-{#			<li>登录</li>   <!-- 显示登录或用户名 -->#}
-{#			<li>注册</li>	<!-- 显示注册或注销 -->#}
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('auth.logout', next=request.full_path) }}">登出</a></li>
+            {% else %}
+            <li><a href="{{ url_for('auth.login', next=request.full_path) }}">登录</a></li>
+            <li><a href="{{ url_for('auth.register', next=request.full_path) }}">注册</a></li>
+            {% endif %}
 		</ul>
     </ul>
 

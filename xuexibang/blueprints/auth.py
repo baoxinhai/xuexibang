@@ -7,26 +7,39 @@ __author__ = 'Jinyang Shao'
 '''
 
 from flask import render_template, Blueprint, redirect, flash, url_for
-from flask_login import  login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required, current_user
 #login_user用于后续的管理员登录
 from xuexibang.main.forms import LoginForm, RegisterForm
 from xuexibang.main.utils import redirect_back
+from xuexibang.main.extensions import db
 
 auth_bp = Blueprint('auth', __name__)
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
+    from database.models.model import UserInfo
     if current_user.is_authenticated:
-        return redirect((url_for('home')))
+        return redirect((url_for('front.home')))
     form = LoginForm()
     if form.validate_on_submit():
-        username = form.username.data
-        flash('Welcome home, %s!' % username)
-        return redirect(url_for('home'))
-    else:
-        flash('No account.','warning')
-        return render_template('auth/login.html', form=form)
+        username_input = form.username.data
+        password_input = form.password.data
+        remember = form.remember.data
+        userinfo = db.get_result({"function" : db.GET_UER_BY_NAME, "content": {
+            "name" : username_input
+        }})['content']
+
+        if userinfo:
+            user = UserInfo(uid=userinfo['uid'], name=userinfo['name'], email=userinfo['email'], admin=userinfo['admin'],
+                         password_hash=userinfo['password_hash'])
+            if user.validate_password(password_input):
+                login_user(user, remember)
+                flash('Welcome home, %s!' % username_input)
+                return redirect_back()
+        else:
+            flash('No account.', 'warning')
+    return render_template('auth/login.html', form=form)
 
 
 @auth_bp.route('/logout')
