@@ -62,6 +62,6 @@ def register():
         user.set_password(password)
         db.get_result({"function" : db.INSERT_USER, "content" : user.to_dict()})
         flash('注册成功！请登录')
-        return redirect(url_for('auth.login', next=request.full_path))
+        return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
