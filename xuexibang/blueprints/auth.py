@@ -6,7 +6,7 @@ __author__ = 'Jinyang Shao'
 用户注册认证后台管理
 '''
 
-from flask import render_template, Blueprint, redirect, flash, url_for
+from flask import render_template, Blueprint, redirect, flash, url_for, request
 from flask_login import login_user, logout_user, login_required, current_user
 #login_user用于后续的管理员登录
 from xuexibang.main.forms import LoginForm, RegisterForm
@@ -52,11 +52,16 @@ def logout():
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
+    from database.models.model import UserInfo
     form = RegisterForm()
     if form.validate_on_submit():
         username = form.username.data
-        email = form.email.data
-        flash('新用户：%s, email: %s' % username, email)
-        return redirect(url_for('home'))
-    return render_template('auth/register.html', data=['data'], form=form)
+        email = form.email.data.lower()
+        password = form.password.data
+        user = UserInfo(name=username, email=email, admin=False)
+        user.set_password(password)
+        db.get_result({"function" : db.INSERT_USER, "content" : user.to_dict()})
+        flash('注册成功！请登录')
+        return redirect(url_for('auth.login', next=request.full_path))
+    return render_template('auth/register.html', form=form)
 

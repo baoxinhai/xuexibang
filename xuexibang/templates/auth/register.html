@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
-{% from 'macros.html' import form_field %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}Register{% endblock %}
 
 {% block content %}
-<h2>用户注册</h2>
-
-<form method="post">
-    {{ form.csrf_token }}
-    {{ form_field(form.username) }}
-    {{ form_field(form.password) }}
-    {{ form_field(form.reinputpasswd) }}
-    {{ form_field(form.email) }}
-    {{ form.submit }}<br>
-</form>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-3 w-100 bg-light">
+                    <div class="card-header"><h4>Welcome to xuexibang!</h4></div>
+                    <div class="card-body">
+                        {{ render_form(form) }}
+                        <hr>
+                        <small>Already have an account? <a href="{{ url_for('auth.login') }}">Click here to log in.</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
