@@ -15,12 +15,34 @@ def get_user_by_name(user, session):
     res = {}
     try:
         user_info = session.query(UserInfo).filter_by(name=user["name"]).first()
+        if user_info is None:
+            raise RuntimeError("User: %s (name)not fond!" % user["name"])
         res["success"] = True
         res["status"] = 0
-        res["message"] = "User: %s fond successfully" % user["name"]
+        res["message"] = "User: %s (name) fond successfully" % user["name"]
         res["content"] = user_info.to_dict()
     except Exception as e:
+        res["success"] = False
+        res["status"] = 1000
+        res["message"] = e.message
+        res["content"] = None
+
+    return res
+
+
+# 根据用户名查找用户
+def get_user_by_id(user, session):
+    res = {}
+    try:
+        user_info = session.query(UserInfo).filter_by(uid=user["uid"]).first()
+        if user_info is None:
+            raise RuntimeError("User: %d (uid) not fond!" % user["uid"])
         res["success"] = True
+        res["status"] = 0
+        res["message"] = "User: %d (uid) fond successfully" % user["uid"]
+        res["content"] = user_info.to_dict()
+    except Exception as e:
+        res["success"] = False
         res["status"] = 1000
         res["message"] = e.message
         res["content"] = None
