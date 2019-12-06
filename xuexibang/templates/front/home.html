@@ -18,31 +18,31 @@
                     {{ form.csrf_token }}
                     <div class="form_group">
                         {{ form.title.label}}<br>
-                        {{ form.title ( class='form-control' )}}<br><!-- 问题标题 -->
+                        {{ form.title ( class='form_control' )}}<br><!-- 问题标题 -->
                     </div>
                     <div class="form_group">
-                        {{ form.description.label }}
-                        {{ form.description(class='form-control description')}}<br> <!-- 问题描述 -->
+                        {{ form.description.label }}<br>
+                        {{ form.description(class='description')}}<br> <!-- 问题描述 -->
+                    </div>
+                    <div class="form_group">
+                        {{ form.category.label }}<br>
+                        {{ form.category(class='form_check_input') }}
                     </div>
                 </div>
-                    <div class="form_group">
-                        {{ form.category.label }}
-                        {{ form.category(class='form-check-input') }}
-                    </div>
-                        {{ form.submit(class='btn') }}<br>  <!-- 发布问题按钮 -->
+                        {{ form.submit(class='btn btn-default') }}<br>  <!-- 发布问题按钮 -->
 			</form>
         </div>
 
 			<!-- 问题显示区 -->
         <div class="row">
-                <div class="ques_container">
+                <div class="ques_display">
                     {% include 'front/_question.html' %}
                 </div>
         </div>
      </div>
 
-		<div class="col-sm-4 sidebar">
-			{% include 'front/_sidebar.html' %}
-		</div>
+    <div class="col-sm-4 sidebar rightbar">
+        {% include 'front/_sidebar.html' %}
+    </div>
 
 {% endblock %}
