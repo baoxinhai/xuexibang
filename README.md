@@ -22,7 +22,6 @@ in meanwhile share their answers in other puzzles.
 
 ## User Requirements Analysis
 ### 用例图
-![](https://github.com/guodongxiaren/ImageCache/raw/master/Logo/foryou.gif) 
 ![](https://github.com/hazenoeasy/xuexibang/raw/develop/doc/用例图.png)
 <br>（1）登录/注册功能：用户输入用户名和密码作为个人信息进入平台，可以实现发布问题、回答问题、关注问题的功能。若未登录/注册，可以浏览网页，但没有上述功能。
 
