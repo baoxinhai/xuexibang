@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ categories[catid] }} {% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='catagory.css' ) }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>类别{{ categories[catid] }}</h1>
+    <p class="test-muted">{{ questions | length }} questions</p>
+</div>
+<div class="row">
+    <div class="col-sm-8">
+            {% include 'front/_question.html' %}
+    </div>
+        <div class="col-sm-4 sidebar">
+            {% include "front/_sidebar.html" %}
+        </div>
+</div>
+{% endblock %}

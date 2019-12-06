@@ -4,33 +4,66 @@
 # filename: test.py
 # 本模块为接口测试模块
 from database.api.main_base import Operator
-from database.api.main_base import GET_UER_BY_NAME
-from database.api.main_base import DELETE_USER_BY_NAME
-from database.api.main_base import UPDATE_USER_PWD
-from database.api.main_base import INSERT_USER
+from database.models.model import UserInfo, QuestionInfo
+import datetime
+from faker import Faker
+
+fake = Faker('zh_CN')
+
+
+def tmp():
+    res = {}
+    try:
+        res["success"] = True
+        res["status"] = 0
+        res["message"] = ""
+        res["content"] = None
+        return res
+
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1000
+        res["message"] = e.message
+        res["content"] = None
+        return res
+
 
 if __name__ == '__main__':
+
     o = Operator()
 
-    print(u"查询admin结果:")
-    print (o.get_result({"function": GET_UER_BY_NAME, "content": {"name": "admin"}}))
+    ret = o.get_result({"function": o.GET_ALL_CATEGORY})["content"]
+    print ret
 
-    print (u"删除admin结果:")
-    print (o.get_result({"function": DELETE_USER_BY_NAME, "content": {"name": "admin"}}))
+    #ret = o.get_result({"function": o.GET_RECOMMEND_QUESTION, "content": {"number": 5}})
+    #for ques in ret["content"]:
+    #   print ques["qutitle"], ques["quid"]  #   ques是一个dict对象
 
-    print(u"查询admin结果:")
-    print (o.get_result({"function": GET_UER_BY_NAME, "content": {"name": "admin"}}))
+    # u = UserInfo(name="哈哈", password="123", email="test@163.com", admin=False)
+    # print o.get_result({"function":o.INSERT_USER,
+                       #  "content": u.to_dict()})
 
-    print (u"插入admin结果:")
-    print (o.get_result({"function": INSERT_USER, "content": {"name": "admin", "password": "12312313", "email": "1059150030@qq.com"}}))
+    # q = QuestionInfo(qucontent="我的第一个问题内容", qutitle="问题标题", qutime=fake.date_time_this_year(), uid=1)
 
-    print(u"查询admin结果:")
-    print (o.get_result({"function": GET_UER_BY_NAME, "content": {"name": "admin"}}))
+    # ret = o.get_result({"function": o.INSERT_QUESTION,
+    #                      "content": q.to_dict()})
+    # print ret
+'''
+    ret = o.get_result({"function":o.GET_ALL_CATEGORY})
 
-    print(u"修改admin密码结果:")
-    print (o.get_result({"function": UPDATE_USER_PWD, "content": {"name": "admin", "password": "12312313"}}))
+    for k, v in ret["content"].iteritems():
+        print k, v
+    if ret["content"]:  # 查询结果为空返回None
+        print "find it !"
+    else:
+        print "no data"
 
-    print(u"查询admin结果:")
-    print (o.get_result({"function": GET_UER_BY_NAME, "content": {"name": "admin"}}))
-
-    o.destroy()
+    print (o.get_result(({"function":o.INSERT_USER,
+                          "content":{
+                              "name":"test",
+                              "password":"test",
+                              "email":"test",
+                              "admin":False
+                          }})))
+ 
+'''

@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+faker = "*"
 
 [packages]
 flask = "*"
@@ -14,6 +15,8 @@ flask-moment = "*"
 python-dotenv = "*"
 pymysql = "*"
 sqlalchemy = "*"
+flask-mail = "*"
+flask-login = "*"
 
 [requires]
 python_version = "2.7"

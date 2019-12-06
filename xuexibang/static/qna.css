@@ -1,0 +1,98 @@
+	* {
+		padding: 0;
+
+	}
+	body {
+        width: 1000px;
+		margin: auto;
+	}
+	ul li {
+		list-style: none;
+	}
+	/*导航栏*/
+	nav {
+		width: 1000px;
+		border-bottom: 1px solid black;
+		background-color: white;
+	}
+
+	ul li a {
+		text-decoration: none;
+		color: black;
+	}
+
+	/*主体左边部分*/
+	main {
+		display: flex;
+	}
+
+	.container {
+		width: 1000px;
+	}
+	.leftbar {
+		flex: 3;
+	}
+
+	/*.leftbar */
+	.mya_container {
+		margin-top: 20px;
+	}
+
+
+	.leftbar h1
+	{
+		text-align: left;
+		line-height: 40px;
+	}
+
+	.page-header {
+		margin: 0;
+	}
+	/*取消超链接的下划线*/
+	.page-header small a {
+		text-decoration: none;
+	}
+
+	/*问题描述文字样式*/
+	.leftbar .col-sm-8 p {
+		line-height: 20px;
+	}
+
+	.mya_container p {
+		line-height: 25px;
+	}
+
+	.rightbar {
+		flex: 2;
+		padding: 0 20px ;
+	}
+
+	.ansform_container {
+		text-align: right;
+		margin-top: 10px;
+	}
+
+	/*回答文本框样式*/
+    .ansform_container .txtarea {
+		width: 420px;
+		height: 400px;
+		margin: 0 auto;
+	}
+
+	/*提交按钮样式*/
+	.ansform_container .btn {
+		width: 50px;
+		height: 30px;
+		text-align: center;
+		margin: 0 auto;
+	}
+
+	footer {
+		font-size: 13px;
+		color: #888;
+		border-top: 1px solid #eee;
+		margin-top: 25px;
+		text-align: center;
+		padding: 10px;
+
+	}

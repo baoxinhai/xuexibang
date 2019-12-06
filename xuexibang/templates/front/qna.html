@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import func %}
+
+{% block title %}问题详情页{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='qna.css' ) }}">
+{% endblock %}
+
+{% block content %}
+    <!-- 主体左边部分 -->
+    <div class="leftbar">
+        <div class="page-header">
+            <h1>{{ question['qutitle'] }}
+                <span class="float-right"></span>
+            </h1>
+            <hr>
+            <small>
+                Categoty:<a
+                        href="{{ url_for('front.show_category', category_id=question['catid']) }}"> {{
+                            categories[question['catid']] }}</a><br>
+                Date: {{ question['qutime'] }}
+            </small>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <p>{{ question['qucontent'] | safe }}</p>
+                <hr>
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".postLinkModal">Share
+                </button>
+            </div>
+        </div>
+
+    {#    显示回答内容#}
+        <div class="mya_container" id="answers">
+            <h3>共有 {{ answers|length }} 个回答</h3>
+            <hr>
+            {% if answers %}
+             <ul class="list-group">
+                 {% for answer in answers %}
+                   <li>用户：{{ answer['uid'] }} 作出的回答</li>
+                   <p>{{ answer['anscontent'] }}</p><hr>
+                 {% endfor %}
+             </ul>
+            {% else %}
+                <div class="tip"><h5>No comments.</h5></div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 主体右边部分 -->
+    <div class="rightbar">
+        <!-- 输入的回答表单 -->
+       <!-- <form class="ansform_container">
+            <div class="ansform_group">
+                <textarea name="answer" rows="10" class="form_control " placeholder="输入您的回答"></textarea>
+            </div>
+            <div class="ansform_group">
+                <button name="sub_ans">提交回答</button>
+            </div>
+        </form> -->
+        <form method="post">
+            <div class="ansform_container">
+                {{ form.csrf_token }}
+                <div class="ansform_group">
+                    {{ form.answer(class='form_control txtarea') }}
+                </div>
+                <div class="ansform_group">
+                    {{ form.submit(class='btn btn-default')}}
+                </div>
+            </div>
+        </form>
+
+    </div>
+{% endblock %}
