@@ -35,25 +35,28 @@ in meanwhile share their answers in other puzzles.
 <br>（4）关注问题的功能：用户可以通过点击问题旁的“关注”按钮关注问题，以便以后查看该问题的回答情况。所有关注的问题可在“我关注的问题”页面查看。
 
 ### 程序流程图
-
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/程序流程图.png)
 ### 数据流图
-coarse--fine
+#### coarse--fine
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/细化1.png)
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/细化2.png)
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/细化3.png)
 
 ##  Interaction Interface
 ### Home page
-
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/网站主页.png)
 ### Login page 
-
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/登陆页面.png)
 ### Register Page
-
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/注册页面.png)
 ### User Published  Page
-
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/发布问题.png)
 ### User Answer Page
-
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/回答问题.png)
 ### User Favorite Page
-
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/关注问题.png)
 ### Question Page
-
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/问题详情.png)
 ## Allocation
 
 ### 邵晋洋
@@ -114,4 +117,4 @@ https://
 
 ### Home Page
 
-
+![](https://github.com/hazenoeasy/xuexibang/blob/develop/doc/12.05.jpg)
