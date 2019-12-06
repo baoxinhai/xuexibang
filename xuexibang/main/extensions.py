@@ -11,6 +11,7 @@ from flask_mail import Mail
 from flask_moment import Moment
 from database.api.main_base import *
 from flask_login import LoginManager
+import click
 
 bootstrap = Bootstrap()
 db = Operator()
@@ -27,9 +28,21 @@ def load_user(user_id):
         "uid" : int(user_id)
     }})
     userinfo = ret["content"]
-    user = UserInfo(uid=userinfo['uid'], name=userinfo['name'], email=userinfo['email'], admin=userinfo['admin'],
-                    password_hash=userinfo['password_hash'])
-    return user
+    if userinfo:
+        user = UserInfo(uid=userinfo['uid'], name=userinfo['name'], email=userinfo['email'], admin=userinfo['admin'],
+                        password_hash=userinfo['password_hash'])
+        return user
+    '''
+    # 一个奇怪的bug，一进入首页就调用此函数，但此时根本没有user_id，只能在下面默认一个登录
+    else:
+        ret = db.get_result({"function": db.GET_USER_BY_ID, "content": {
+            "uid": 1
+        }})
+        userinfo = ret["content"]
+        user = UserInfo(uid=userinfo['uid'], name=userinfo['name'], email=userinfo['email'], admin=userinfo['admin'],
+                        password_hash=userinfo['password_hash'])
+        return user
+'''
 
 
 login_manager.login_view = 'auth.login'
