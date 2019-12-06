@@ -22,9 +22,20 @@
         <ul>
 			<li>logo</li>
 			<li> <a href="{{ url_for('front.home') }}">首页</a></li>
-			<li> <a href="{{ url_for('front.myquestion', user_id=2) }} ">我发布的问题</a></li>
+            {% if current_user.is_authenticated %}
+            <li> <a href="{{ url_for('front.myquestion', user_id=current_user.uid, next=request.full_path) }} ">我发布的问题</a></li>
 		    <li><a href="{{ url_for('front.home') }}">我回答的问题</a></li>   {#!链接#}
 			<li><a href="{{ url_for('front.home') }}" >我关注的问题</a></li>
+
+            <li><a href="{{ url_for('auth.logout', next=request.full_path) }}">登出</a></li>
+            {% else %}
+            <li> <a href="{{ url_for('auth.login', next=request.full_path) }} ">我发布的问题</a></li>
+		    <li><a href="{{ url_for('auth.login', next=request.full_path) }}">我回答的问题</a></li>
+			<li><a href="{{ url_for('auth.login', next=request.full_path) }}" >我关注的问题</a></li>
+            <li><a href="{{ url_for('auth.login', next=request.full_path) }}">登录</a></li>
+            <li><a href="{{ url_for('auth.register', next=request.full_path) }}">注册</a></li>
+            {% endif %}
+
 		</ul>
     </ul>
 
@@ -58,10 +69,11 @@
 </main>
 
 <footer>
-    {% block footer %}
-        <small> &copy; 2019 <a href="https://blog.csdn.net/weixin_44617992/article/details/102926000" title="Written by Sjy">Victor Shao</a> /
+
+        <small> &copy; 2019 <a href="https://blog.csdn.net/weixin_44617992/article/details/102926000" title="Written by Sjy">Shao's blog</a> /
+
             <a href="https://github.com/Sugar-Coder/xuexibang.git" title="Fork me on GitHub">GitHub</a> /
-            <a href="http://helloflask.com" title="A Flask project">QnAWebApp development base on the book</a>
+            <a href="http://helloflask.com" title="A Flask project">XuexibangWebApp development base on the book</a>
         </small>
     {% endblock footer %}
 </footer>
