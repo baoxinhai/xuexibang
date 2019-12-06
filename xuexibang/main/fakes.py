@@ -21,7 +21,7 @@ fake = Faker('zh_CN')
 def fake_user(count=1):
     for i in range(count):
         u = UserInfo(name=fake.name(), email=fake.email(), admin=False)
-        u.set_password("123")
+        u.set_password("88888888")
         ret = db.get_result({"function":db.INSERT_USER, "content": u.to_dict()})
         click.echo(ret["content"])
 
