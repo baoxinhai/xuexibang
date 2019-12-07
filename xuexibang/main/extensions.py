@@ -24,7 +24,7 @@ login_manager = LoginManager()
 @login_manager.user_loader
 def load_user(user_id):
     from database.models.model import UserInfo
-    ret = db.get_result({"function" : db.GET_USER_BY_ID, "content" : {
+    ret = db.get_result({"function" : db.GET_USER_BY_ID, "content": {
         "uid" : int(user_id)
     }})
     userinfo = ret["content"]
