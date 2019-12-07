@@ -67,7 +67,7 @@ def register():
             ret = db.get_result({"function" : db.INSERT_USER, "content" : user.to_dict()})
             if ret["success"]:
                 flash('注册 %s ！请登录' % ret["success"])
-                return redirect(url_for('auth.register'))
+                return redirect(url_for('auth.login'))
             else:
                 flash('注册失败')
                 return redirect(url_for('auth.register'))

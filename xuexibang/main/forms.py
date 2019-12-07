@@ -14,7 +14,7 @@ from extensions import db
 class LoginForm(FlaskForm):
     # 使用render_kw来为表单项增加属性placeholder
     username = StringField('Username', validators=[DataRequired()], render_kw={'placeholder': 'username'})
-    password = PasswordField('Password', validators=[DataRequired(), Length(8, 128)], render_kw={'placeholder': '>=8'})
+    password = PasswordField('Password', validators=[DataRequired(), Length(3, 128)], render_kw={'placeholder': '>=3'})
     remember = BooleanField('Remember me')
     submit = SubmitField('Log in')
 
@@ -22,8 +22,8 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
     email = StringField('Email', validators=[DataRequired(), Email(), Length(1, 254), Email()])
-    password = PasswordField('Password', validators=[DataRequired(), Length(8, 128), EqualTo('password2')])
-    password2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(8, 128)])  # 未添加验证
+    password = PasswordField('Password', validators=[DataRequired(), Length(3, 128), EqualTo('password2')])
+    password2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(3, 128)])  # 未添加验证
     submit = SubmitField('Register')
 
     def validate_username(self, field):  # 防止用户名重复
