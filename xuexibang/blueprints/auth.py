@@ -58,10 +58,21 @@ def register():
         username = form.username.data
         email = form.email.data.lower()
         password = form.password.data
-        user = UserInfo(name=username, email=email, admin=False)
-        user.set_password(password)
-        db.get_result({"function" : db.INSERT_USER, "content" : user.to_dict()})
-        flash('注册成功！请登录')
-        return redirect(url_for('auth.login'))
+        ret = db.get_result({"function" : db.GET_UER_BY_NAME, "content" : {
+            "name" : username
+        }})
+        if ret["content"] is None:
+            user = UserInfo(name=username, email=email, admin=False)
+            user.set_password(password)
+            ret = db.get_result({"function" : db.INSERT_USER, "content" : user.to_dict()})
+            if ret["success"]:
+                flash('注册 %s ！请登录' % ret["success"])
+                return redirect(url_for('auth.register'))
+            else:
+                flash('注册失败')
+                return redirect(url_for('auth.register'))
+        else:
+            flash('用户名已存在！重新注册')
+            return redirect(url_for('auth.register'))
     return render_template('auth/register.html', form=form)
 
