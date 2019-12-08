@@ -110,10 +110,12 @@ class Operator:
         cont = given.get("content")
         dev = given.get("dev")
         res = {}
+        log_flag = 1
         if function == self.DATABASE_INIT and dev is True:
             res = database_init(engine=engine, session=session)
 
         elif function == self.GET_UER_BY_NAME:
+            log_flag = 0
             res = get_user_by_name(cont, session)
 
         elif function == self.INSERT_USER:
@@ -129,24 +131,30 @@ class Operator:
             res = insert_question(cont, session)
 
         elif function == self.GET_RECOMMEND_QUESTION:
-            res = get_recommend_question(cont,session)
+            log_flag = 0
+            res = get_recommend_question(cont, session)
 
         elif function == self.GET_QUESTION_BY_ID:
+            log_flag = 0
             res = get_question(cont, session)
 
         elif function == self.INSERT_ANSWER:
             res = insert_answer(cont, session)
 
         elif function == self.GET_ANSWER_BY_ID:
+            log_flag = 0
             res = get_answer_by_id(cont, session)
 
         elif function == self.GET_ANSWER_BY_QUID:
+            log_flag = 0
             res = get_answer_by_quid(cont, session)
 
         elif function == self.GET_QUESTION_BY_UID:
+            log_flag = 0
             res = get_question_by_uid(cont, session)
 
         elif function == self.GET_ANSWER_BY_UID:
+            log_flag = 0
             res = get_answer_by_uid(cont, session)
 
         elif function == self.DELETE_ANSWER_BY_ID:
@@ -156,9 +164,11 @@ class Operator:
             res = delete_question_by_id(cont, session)
 
         elif function == self.INSERT_FOLLOW:
+            log_flag = 0
             res = insert_follow(cont, session)
 
         elif function == self.DELETE_FOLLOW:
+            log_flag = 0
             res = delete_follow(cont, session)
 
         elif function == self.INSERT_CATEGORY:
@@ -168,22 +178,26 @@ class Operator:
             res = delete_category(cont, session)
 
         elif function == self.GET_ALL_CATEGORY:
+            log_flag = 0
             res = get_all_category(session)
 
         elif function == self.GET_QUESTION_BY_CAT:
+            log_flag = 0
             res = get_question_by_cat(cont, session)
 
         elif function == self.GET_USER_FOLLOW:
+            log_flag = 0
             res = get_user_follow(cont, session)
 
         elif function == self.GET_USER_BY_ID:
-            res = get_user_by_id(cont,session)
+            log_flag = 0
+            res = get_user_by_id(cont, session)
 
         session.close()
         if res["success"] is True:
-            Logger.info(res["message"])
+            Logger.info(log_flag, res["message"])
         else:
-            Logger.error(res["message"])
+            Logger.error(log_flag, res["message"])
         return res
 
 
