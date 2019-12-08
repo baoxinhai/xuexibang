@@ -1,0 +1,22 @@
+{% if questions %} <!-- 用于主页中显示问题概要 -->
+    {% for ques in questions %} <!-- question是个list， ques是model里QuestionInfo的dict -->
+        <h3 class="text-primary"><a href="{{ url_for('front.show_question', question_id=ques['quid']) }}">{{ ques['qutitle'] }}</a></h3>
+        <p>
+            {{ ques['qucontent']|striptags|truncate }}
+            <small><a href="{{ url_for('front.show_question', question_id=ques['quid']) }}">Read More</a></small>
+        </p>
+        <small>
+            Comments: <a href="{{ url_for('front.show_question', question_id=ques['quid']) }}#comments">{{ ques['ansnumber'] }}</a>&nbsp;&nbsp;
+            Category: <a
+                href="{{ url_for('front.show_category', category_id=ques['catid']) }}">{{ categories[ques['catid']] }}</a>
+            <span class="float-right">{{ moment(ques['qutime']).format('LL') }}</span> <!--categoried是模板上下文变量 -->
+        </small>
+        {% if not loop.last %}
+            <hr>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <div class="tip">
+        <h5>No posts yet.</h5>
+    </div>
+{% endif %}

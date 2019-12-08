@@ -8,10 +8,9 @@ from flask import Flask, render_template
 from xuexibang.blueprints.auth import auth_bp
 from xuexibang.blueprints.front import front_bp
 from xuexibang.blueprints.dashboard import dashboard_bp
-from xuexibang.main.extensions import bootstrap, db, ckeditor, moment, mail
+from xuexibang.main.extensions import bootstrap, db, ckeditor, moment, mail, login_manager
 from xuexibang.settings import config
 
-from database.api.main_base import *
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -38,9 +37,7 @@ def register_logging(app):
 
 def register_extensions(app):
     bootstrap.init_app(app)
-    # need?
-    # db.init_app(app)
-
+    login_manager.init_app(app)
     ckeditor.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
@@ -58,8 +55,14 @@ def register_shell_context(app):
         return dict(db=db)
 
 
+'''模板的上下文变量'''
+
+
 def register_template_context(app):
-    pass
+    @app.context_processor
+    def make_template_context():
+        categories = db.get_result({"function": db.GET_ALL_CATEGORY})["content"]  # 用于显示边栏
+        return dict(categories=categories)
 
 
 def register_errors(app):
@@ -88,10 +91,42 @@ def register_commands(app):
             click.echo('Drop tables.')
         click.echo('Initialized database.')
 
-'''
-# success!
-o = Operator()
-res = o.get_result({"function": DATABASE_INIT, "content": "","dev":True})
-print (res)
-o.destroy()
-'''
+
+    @app.cli.command()
+    @click.option('--username', prompt=True, help='The administrator\'s name used to login.')
+    @click.option('--email', prompt=True, help='The email:')
+    @click.option('--password', prompt=True, hide_input=True,
+                  confirmation_prompt=True, help='The password used to login.')
+    def init(username, email, password):
+        from database.models.model import UserInfo
+        click.echo('Initializing the database...')
+        db.get_result({"function": db.DATABASE_INIT, "content": "", "dev": True})
+
+        click.echo('Creating the temporary administrator account...')
+        admin=UserInfo(name=username, email=email, admin=True)
+        admin.set_password(password)
+        db.get_result({"function":db.INSERT_USER, "content":admin.to_dict()})
+        click.echo('Done.')
+
+    @app.cli.command()
+    @click.option('--category', default=5, help='Quantity of question\'s categoty, 5 kinds')
+    @click.option('--qna', default=10, help='Generate questions and their answers, 10 questions')
+    @click.option('--follow', default=1, help='Generate user id=1 \'s follow')
+    def forge(category, qna, follow):
+        from xuexibang.main.fakes import fake_category, fake_follow, fake_qna, fake_user
+        # 初始化数据库放到了init选项中
+        # db.get_result({"function": db.DATABASE_INIT, "content": "", "dev":True})
+
+        click.echo('Generating the user..')
+        fake_user()
+
+        click.echo('Generating the question\'s %d categoty...' % category)
+        fake_category(category)
+
+        click.echo('Generating %d question and answers' % qna)
+        fake_qna(qna)
+
+        click.echo('Generating user\'s follow:')
+        fake_follow(follow)
+
+        click.echo('Done.')

@@ -1,43 +1,30 @@
 /*home.html*/
-* {
-	padding: 0;
-	margin: auto;
-}
 
 body {
 	width: 1000px;
-	/*margin: auto;*/
-
-	/*background-color: #eee;   !*灰色背景*!*/
+	margin: auto;
 }
 nav {
-	width: 100%;
-	height: 60px;
+	width: 1000px;
+	/*height: 60px;*/
 	border-bottom: 1px solid black;
 	background-color: white;
 }
-nav ul {
-	padding: 10px 30px;
-}
 
-nav li {
+/*nav li {
 	list-style: none;
-	float: left;       /*!*排成一行*!*/
+	float: left;       /*!*排成一行*!
 	margin: 10px 20px;
 }
 
-nav li:nth-child(6)
-{
-	margin-left: 700px;
-}
 
 ul li a {
 	text-decoration: none;
 	color: black;
-}
+}*/
 
 	form {
-		margin: 10px auto;
+		margin-bottom: 5px;
 	}
 
 	main {
@@ -45,18 +32,20 @@ ul li a {
 		display: flex;
 	}
 
+	.container{
+		width: 1000px;
+	}
 	main .leftbar {
-		flex: 5;
-		border-right: 1px solid black;
+		flex: 4;
+
 	}
 	main .rightbar {
-		flex: 2;
+		flex: 1;
 	}
 
 	main .submit_ques {
 		overflow: hidden;
-		/*width: 70%;*/
-		margin: 30px auto;
+		margin: 5px auto;
 		border-bottom: 1px solid black;
 	}
 
@@ -65,19 +54,21 @@ ul li a {
 		text-align: left;
 	}
 
-	/*.form_group {*/
-		/*text-align: left; 文本左对齐*/
-	/*}*/
-
 	.form_group .form_control
 	{
-		width: 100%;
-        height: 40px;
-		margin: 10px 0px;
+		width: 98%;
+    	height: 30px;
+		margin: 10px 0;
 	}
 
 	.form_group .description {
+		width: 98%;
 		height: 80px;
+	}
+
+	.form_group .form-check-label {
+		width: 80px;
+		height: 30px;
 	}
 	.btn {
 		width: 50px;
@@ -85,15 +76,8 @@ ul li a {
 		font-size:  15px;
 	}
 
-	/*显示问题区域*/
-	/*.ques_container {*/
-		/*padding: 10px 0;*/
-	/*}*/
-
-	.ques {
-		height: 60px;
-		width: 100%;
-		border-bottom: 1px dashed black;
+	.ques_display a {
+		text-decoration: none;
 	}
 
 	/*分类栏*/
@@ -102,12 +86,15 @@ ul li a {
 		overflow: hidden;
 	}
 
-footer {
-    font-size: 13px;
-    color: #888;
-    border-top: 1px solid #eee;
-    margin-top: 25px;
-    text-align: center;
-    padding: 10px;
+	.row{
+		margin-left: 0;
+	}
+	footer {
+		font-size: 13px;
+		color: #888;
+		border-top: 1px solid #eee;
+		margin-top: 25px;
+		text-align: center;
+		padding: 10px;
 
-}
+	}

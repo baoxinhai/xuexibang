@@ -3,45 +3,65 @@
 <head> <!-- 这是一个html的页面模板，包括页眉页脚,需要前端同学的美化，可以找网上的模板 -->
     {% block head %}
         <meta charset="utf-8">
-        <title>{% block title %}A Flask demo with jinja2{% endblock %}</title>
+        <title>{% block title %}首页{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
         {% block styles %}
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css' ) }}">
         {% endblock %}
     {% endblock %}
 </head>
 <body>
-<nav> <!--导航栏-->
-{#    <ul><li><a href="{{ url_for('front.home') }}">Home</a></li></ul>#}
+{% block nav %}
 
-    <ul>
-        <ul>
-			<li>logo</li>
-			<li> <a href="{{ url_for('front.home') }}">首页</a></li>
-			<li> <a href="{{ url_for('front.myquestion') }} ">我发布的问题</a></li>
-		    <li><a href="{{ url_for('front.home') }}">我回答的问题</a></li>   {#!链接#}
+    <nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="{{ url_for('front.home') }}">学习帮</a>
+	</div>
+	<div>
+		<ul class="nav navbar-nav">
+            {% if current_user.is_authenticated %}
+			<li><a href="{{ url_for('front.home') }}">首页</a></li>
+			<li><a href="{{ url_for('front.myquestion', user_id=current_user.uid, next=request.full_path) }}">我发布的问题</a></li>
+            <li><a href="{{ url_for('front.home') }}">我回答的问题</a></li>
 			<li><a href="{{ url_for('front.home') }}" >我关注的问题</a></li>
-{#			<li>登录</li>   <!-- 显示登录或用户名 -->#}
-{#			<li>注册</li>	<!-- 显示注册或注销 -->#}
+            <li><a href="{{ url_for('auth.logout', next=request.full_path) }}">登出</a></li>
+            {% else %}
+            <li> <a href="{{ url_for('auth.login', next=request.full_path) }} ">我发布的问题</a></li>
+		    <li><a href="{{ url_for('auth.login', next=request.full_path) }}">我回答的问题</a></li>
+			<li><a href="{{ url_for('auth.login', next=request.full_path) }}" >我关注的问题</a></li>
+            <li><a href="{{ url_for('auth.login', next=request.full_path) }}">登录</a></li>
+            <li><a href="{{ url_for('auth.register', next=request.full_path) }}">注册</a></li>
+            {% endif %}
 		</ul>
-    </ul>
-
+	</div>
+	</div>
 </nav>
+{% endblock nav %}
 
-<main>
-{#    {% for message in get_flashed_messages() %}#}
-{#        <div class="alert">{{ message }}</div>#}
-{#    {% endfor %}#}
-    {% block content %}{% endblock %}
+<main class="container">
+    {% for message in get_flashed_messages(with_categories=True) %}
+        <div class="alert alert-{{ message[0] }}" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message[1] }}
+        </div>
+    {% endfor %}
+    {% block content %}{% endblock content %}
 </main>
+{% block footer %}
 <footer>
-    {% block footer %}
-        <small> &copy; 2019 <a href="https://blog.csdn.net/weixin_44617992/article/details/102926000" title="Written by Sjy">Victor Shao</a> /
+
+        <small> &copy; 2019 <a href="https://blog.csdn.net/weixin_44617992/article/details/102926000" title="Written by Sjy">Shao's blog</a> /
+
             <a href="https://github.com/Sugar-Coder/xuexibang.git" title="Fork me on GitHub">GitHub</a> /
-            <a href="http://helloflask.com" title="A Flask project">QnAWebApp development base on the book</a>
+            <a href="http://helloflask.com" title="A Flask project">XuexibangWebApp development base on the book</a>
         </small>
-    {% endblock %}
+    {% endblock footer %}
 </footer>
+
 {% block scripts %}{% endblock %}
 </body>
 </html>

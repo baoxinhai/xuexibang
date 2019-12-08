@@ -8,6 +8,8 @@ from database.models.model import UserInfo, QuestionInfo
 import datetime
 from faker import Faker
 
+fake = Faker('zh_CN')
+
 
 def tmp():
     res = {}
@@ -29,32 +31,33 @@ def tmp():
 if __name__ == '__main__':
 
     o = Operator()
-    u = UserInfo(name="哈哈", password="123", email="test@163.com", admin=False)
-    print o.get_result({"function":o.INSERT_USER,
-                        "content": u.to_dict()})
 
-    # q = QuestionInfo(qucontent=u"my content question", qutitle=u"my question title", qutime=datetime.datetime.now(), uid=1)
+    ret = o.get_result({"function": o.GET_ALL_CATEGORY})["content"]
+    print ret
+
+    #ret = o.get_result({"function": o.GET_RECOMMEND_QUESTION, "content": {"number": 5}})
+    #for ques in ret["content"]:
+    #   print ques["qutitle"], ques["quid"]  #   ques是一个dict对象
+
+    # u = UserInfo(name="哈哈", password="123", email="test@163.com", admin=False)
+    # print o.get_result({"function":o.INSERT_USER,
+                       #  "content": u.to_dict()})
+
+    # q = QuestionInfo(qucontent="我的第一个问题内容", qutitle="问题标题", qutime=fake.date_time_this_year(), uid=1)
 
     # ret = o.get_result({"function": o.INSERT_QUESTION,
-                       #  "content": q.to_dict()})
+    #                      "content": q.to_dict()})
     # print ret
+'''
+    ret = o.get_result({"function":o.GET_ALL_CATEGORY})
 
-    print (o.get_result({"function":o.GET_ALL_CATEGORY,
-                         "content":{
-                             "catname":"math",
-                             "name":"admin",
-                             #"anscontent":"test",
-                             #"anstime":datetime.datetime.now(),
-                             "qucontent":"test",
-                             "qutitle":"test",
-                             "uid":2,
-                             #"quid":1,
-                             "qutime":datetime.datetime.now(),
-                             "catid":1,
-                             "number":3
-                         }}))
+    for k, v in ret["content"].iteritems():
+        print k, v
+    if ret["content"]:  # 查询结果为空返回None
+        print "find it !"
+    else:
+        print "no data"
 
-    '''
     print (o.get_result(({"function":o.INSERT_USER,
                           "content":{
                               "name":"test",

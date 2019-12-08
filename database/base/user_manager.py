@@ -30,7 +30,7 @@ def get_user_by_name(user, session):
     return res
 
 
-# 根据用户名查找用户
+# 根据用户id查找用户
 def get_user_by_id(user, session):
     res = {}
     try:

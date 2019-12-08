@@ -27,11 +27,11 @@ def database_init(engine, session):
                             update questioninfo
                             set ansnumber = ansnumber + 1
                             where quid = NEW.quid;''')
-        # 创建管理员
-        admin = UserInfo(name='admin', password='123123', email='1059150030@qq.com',admin=True)
+        # 创建管理员, 现在移动到xuexibang/init中创建
+        # admin = UserInfo(name='admin', password='123123', email='1059150030@qq.com',admin=True)
 
         # 插入管理员
-        session.add(admin)
+        # session.add(admin)
         session.commit()
     # 异常检测
     except Exception as e:

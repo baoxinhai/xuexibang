@@ -16,6 +16,7 @@ python-dotenv = "*"
 pymysql = "*"
 sqlalchemy = "*"
 flask-mail = "*"
+flask-login = "*"
 
 [requires]
 python_version = "2.7"
