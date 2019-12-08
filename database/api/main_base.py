@@ -197,9 +197,9 @@ class Operator:
         if res["success"] is True:
             Logger.info(log_flag, res["message"])
         else:
-            Logger.error(log_flag, res["message"])
+            Logger.error(1, res["message"])
         return res
 
 
 if __name__ == '__main__':
-    Logger.info("test")
+    Logger.info(1,"test")
