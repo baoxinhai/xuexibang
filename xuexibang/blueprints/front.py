@@ -25,7 +25,6 @@ front_bp = Blueprint('front', __name__)
 def home():
     form = HomeForm()
     if current_user.is_authenticated:
-        click.echo("user authenticated")
         if form.validate_on_submit():
             title = form.title.data
             description = form.description.data
@@ -43,6 +42,9 @@ def home():
             db.get_result({"function" : db.INSERT_QUESTION, "content" : question.to_dict()})
             flash("提交问题成功！", "success")
             return redirect(url_for('front.home'))
+    else:
+        if form.validate_on_submit():
+            flash("请先登录!", "warning")
     ret = db.get_result({"function" : db.GET_RECOMMEND_QUESTION, "content": {"number": 5}})
     questions = ret["content"]
     return render_template('front/home.html', questions=questions, form=form)
