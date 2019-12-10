@@ -7,15 +7,16 @@
 # 不对外可见的数据库操作函数
 
 
-from database.models.model import QuestionInfo, AnswerInfo
+from database.models.model import QuestionInfo
 
 
 def get_recommend_question(number, session):
+    question_info_list = []
     question_list = []
     res = {}
 
     try:
-        question_info_list = session.query(QuestionInfo).limit(number["number"]).all()
+        question_info_list = session.query(QuestionInfo).limit(number["number"]).offset(number["start"]).all()
 
         for question_info in question_info_list:
             tmp = question_info.to_dict()
@@ -38,6 +39,8 @@ def insert_question(given, session):
     try:
         question_info = QuestionInfo()
         question_info.dict_init(given)
+        if question_info.ansnumber is None:
+            question_info.ansnumber = 0
         session.add(question_info)
         session.commit()
         res["success"] = True
@@ -118,7 +121,8 @@ def delete_question_by_id(quid, session):
 def get_question_by_cat(given, session):
     res = {}
     try:
-        question_info_list = session.query(QuestionInfo).filter_by(catid=given["catid"]).limit(given["number"]).all()
+        question_info_list = session.query(QuestionInfo).filter_by(catid=given["catid"]).limit(given["number"]).offset(
+            given["start"]).all()
         question_list = []
 
         for question_info in question_info_list:
