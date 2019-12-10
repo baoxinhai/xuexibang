@@ -62,6 +62,8 @@ def register_template_context(app):
     @app.context_processor
     def make_template_context():
         categories = db.get_result({"function": db.GET_ALL_CATEGORY})["content"]  # 用于显示边栏
+        unread_answers = 5
+        unread_questions = 10
         return dict(categories=categories)
 
 

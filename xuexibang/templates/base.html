@@ -23,18 +23,55 @@
 	</div>
 	<div>
 		<ul class="nav navbar-nav">
-            {% if current_user.is_authenticated %}
+            {% if current_user.is_authenticated and not current_user.admin %} <!-- 非管理员登录 -->
 			<li><a href="{{ url_for('front.home') }}">首页</a></li>
 			<li><a href="{{ url_for('front.myquestion', user_id=current_user.uid, next=request.full_path) }}">我发布的问题</a></li>
             <li><a href="{{ url_for('front.home') }}">我回答的问题</a></li>
 			<li><a href="{{ url_for('front.home') }}" >我关注的问题</a></li>
             <li><a href="{{ url_for('auth.logout', next=request.full_path) }}">{{ current_user.name }} 登出</a></li>
-            {% else %}
+            {% else if not current_user.is_authenticated %}
             <li> <a href="{{ url_for('auth.login', next=request.full_path) }} ">我发布的问题</a></li>
 		    <li><a href="{{ url_for('auth.login', next=request.full_path) }}">我回答的问题</a></li>
 			<li><a href="{{ url_for('auth.login', next=request.full_path) }}" >我关注的问题</a></li>
             <li><a href="{{ url_for('auth.login', next=request.full_path) }}">登录</a></li>
             <li><a href="{{ url_for('auth.register', next=request.full_path) }}">注册</a></li>
+            {% else if current_user.is_authenticated and current_user.admin %} <!-- 管理员登录 -->
+                <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                New <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ url_for('dashboard.new_category') }}">新种类</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                Manage <span class="caret"></span>
+                                {% if unread_comments or unread_questions %}  <!--  -->
+                                    <span class="badge badge-success">new</span>
+                                {% endif %}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ url_for('dashboard.manage_users') }}">Users</a>
+                                <a class="dropdown-item" href="{{ url_for('dashboard.manage_category') }}">Categories</a>
+                                <a class="dropdown-item" href="{{ url_for('dashboard.manage_questions') }}">Questions
+                                    {% if unread_questions %}
+                                        <span class="badge badge-success">{{ unread_questions }}</span>
+                                    {% endif %}
+                                </a>
+                                <a class="dropdown-item" href="{{ url_for('dashboard.manage_answers') }}">
+                                    Answers
+                                    {% if unread_answers %}
+                                        <span class="badge badge-success">{{ unread_answers }}</span>
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </li>
+                         {{ render_nav_item('dashboard.settings', 'Settings') }}
             {% endif %}
 		</ul>
 	</div>

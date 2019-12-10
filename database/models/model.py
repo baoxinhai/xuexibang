@@ -97,6 +97,9 @@ class QuestionInfo(BaseModel, ModelProcessor):
     ansid = Column(Integer, nullable=True)
     catid = Column(Integer, ForeignKey(Category.catid, ondelete="SET NULL", onupdate="CASCADE"), nullable=True)
     ansnumber = Column(Integer, nullable=False)
+
+    unread = Column(Boolean, nullable=False, default=True)
+
     __table_args__ = {
 
         'mysql_charset': 'UTF8MB4'
@@ -113,6 +116,9 @@ class AnswerInfo(BaseModel, ModelProcessor):
 
     uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     quid = Column(Integer, ForeignKey(QuestionInfo.quid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+
+    unread = Column(Boolean, nullable=False, default=True)
+
     __table_args__ = {
 
         'mysql_charset': 'UTF8MB4'
