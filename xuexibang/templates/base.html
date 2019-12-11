@@ -29,13 +29,13 @@
             <li><a href="{{ url_for('front.home') }}">我回答的问题</a></li>
 			<li><a href="{{ url_for('front.home') }}" >我关注的问题</a></li>
             <li><a href="{{ url_for('auth.logout', next=request.full_path) }}">{{ current_user.name }} 登出</a></li>
-            {% else if not current_user.is_authenticated %}
+            {% elif not current_user.is_authenticated %}
             <li> <a href="{{ url_for('auth.login', next=request.full_path) }} ">我发布的问题</a></li>
 		    <li><a href="{{ url_for('auth.login', next=request.full_path) }}">我回答的问题</a></li>
 			<li><a href="{{ url_for('auth.login', next=request.full_path) }}" >我关注的问题</a></li>
             <li><a href="{{ url_for('auth.login', next=request.full_path) }}">登录</a></li>
             <li><a href="{{ url_for('auth.register', next=request.full_path) }}">注册</a></li>
-            {% else if current_user.is_authenticated and current_user.admin %} <!-- 管理员登录 -->
+            {% elif current_user.is_authenticated and current_user.admin %} <!-- 管理员登录 -->
                 <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true"
@@ -71,7 +71,8 @@
                                 </a>
                             </div>
                         </li>
-                         {{ render_nav_item('dashboard.settings', 'Settings') }}
+                         <li><a href="{{ url_for('dashboard.settings') }}">settings</a></li>
+            <li><a href="{{ url_for('auth.logout', next=request.full_path) }}">{{ current_user.name }} 登出</a></li>
             {% endif %}
 		</ul>
 	</div>

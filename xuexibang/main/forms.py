@@ -69,7 +69,7 @@ class CategoryForm(FlaskForm):  # 用于新增种类的表单
         }})
 
 
-class AdminForm(FlaskForm):
+class AdminForm(FlaskForm):   # 用于更改管理员密码
     password = PasswordField('New Password', validators=[DataRequired(), Length(3, 128), EqualTo('password2')])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(3, 128)])  # 未添加验证
     submit = SubmitField('ChangePass')
