@@ -11,6 +11,8 @@ from xuexibang.main.extensions import db
 from xuexibang.main.forms import HomeForm, AnswerForm
 from database.models.model import QuestionInfo, AnswerInfo
 
+from xuexibang.main.utils import Page  # 用于分页的记录
+
 import click  # for debug
 
 defaultencoding = 'utf-8'
@@ -21,8 +23,9 @@ if sys.getdefaultencoding() != defaultencoding:
 front_bp = Blueprint('front', __name__)
 
 
-@front_bp.route('/home', methods=['GET', 'POST'])
-def home():
+@front_bp.route('/home', defaults={'page': 1}, methods=['GET', 'POST'])
+@front_bp.route('/home/page/<int:page>')
+def home(page):
     form = HomeForm()
     if current_user.is_authenticated:
         if form.validate_on_submit():
@@ -45,9 +48,22 @@ def home():
     else:
         if form.validate_on_submit():
             flash("请先登录!", "warning")
-    ret = db.get_result({"function" : db.GET_RECOMMEND_QUESTION, "content": {"number": 5}})
+
+    per_page = current_app.config['QUESTIONS_PER_PAGE']  # 每页显示的数量
+    ret = db.get_result({"function" : db.GET_RECOMMEND_QUESTION, "content": {"number": per_page, "start" : per_page * (page - 1)}})
+    if ret["content"]:
+        page_record=Page(page, per_page)
+        if page <= 1:
+            page_record.has_prev = False
+        else:
+            page_record.has_prev = True
+        if len(ret["content"]) < per_page:
+            page_record.is_last = True
+    else:
+        page_record=Page(page, per_page, True)
+        page_record.has_prev = True
     questions = ret["content"]
-    return render_template('front/home.html', questions=questions, form=form)
+    return render_template('front/home.html', questions=questions, form=form, page=page_record)
 
 
 @front_bp.route('/')
@@ -56,13 +72,30 @@ def index():
 
 
 # 显示某一类的问题页面
-@front_bp.route('/categoty/<int:category_id>')
-def show_category(category_id):
+@front_bp.route('/category/<int:category_id>', defaults={'page': 1})
+@front_bp.route('/category/<int:category_id>/page/<int:page>')
+def show_category(category_id, page):
     # number is the total amount of questions displayed
     catid = category_id
-    ret = db.get_result({"function" : db.GET_QUESTION_BY_CAT, "content" : {"number": 5, "catid" : category_id}})
+    '''need change'''
+    # ret = db.get_result({"function" : db.GET_QUESTION_BY_CAT, "content" :
+    # {"number": 5, "start": 0, "catid": category_id}})
+    per_page = current_app.config['QUESTIONS_PER_PAGE']  # 每页显示的数量
+    ret = db.get_result(
+        {"function": db.GET_QUESTION_BY_CAT, "content": {"number": per_page, "start": per_page * (page - 1), "catid": category_id}})
+    if ret["content"]:
+        page_record = Page(page, per_page)
+        if page <= 1:
+            page_record.has_prev = False
+        else:
+            page_record.has_prev = True
+        if len(ret["content"]) < per_page:
+            page_record.is_last = True
+    else:
+        page_record = Page(page, per_page, True)
+        page_record.has_prev = True
     questions = ret["content"]  # 一个list对象
-    return render_template('front/category.html', questions=questions, catid=catid)
+    return render_template('front/category.html', questions=questions, catid=catid, page=page_record)
 
 
 # 显示单个问题及其回答的页面
