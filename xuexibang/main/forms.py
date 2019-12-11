@@ -57,3 +57,19 @@ class AnswerForm(FlaskForm):
     answer = TextAreaField('答案', validators=[DataRequired()], render_kw={'placeholder': 'please input the answer'})
     # 提交按钮
     submit = SubmitField('提交')
+
+
+class CategoryForm(FlaskForm):  # 用于新增种类的表单
+    name = StringField('Name', validators=[DataRequired(),  Length(1, 30)])
+    submit = SubmitField()
+
+    def validate_on_submit(self, field):
+        ret = db.get_result({"function" : db.GET_CATEGORY_BY_NAME, "content" : {
+            "catname" : field.data
+        }})
+
+
+class AdminForm(FlaskForm):
+    password = PasswordField('New Password', validators=[DataRequired(), Length(3, 128), EqualTo('password2')])
+    password2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(3, 128)])  # 未添加验证
+    submit = SubmitField('ChangePass')
