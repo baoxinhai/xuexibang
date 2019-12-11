@@ -26,7 +26,7 @@ def login():
         username_input = form.username.data
         password_input = form.password.data
         remember = form.remember.data
-        userinfo = db.get_result({"function" : db.GET_UER_BY_NAME, "content": {
+        userinfo = db.get_result({"function": db.GET_UER_BY_NAME, "content": {
             "name" : username_input
         }})['content']
 
@@ -64,7 +64,7 @@ def register():
         if ret["content"] is None:
             user = UserInfo(name=username, email=email, admin=False)
             user.set_password(password)
-            ret = db.get_result({"function" : db.INSERT_USER, "content" : user.to_dict()})
+            ret = db.get_result({"function": db.INSERT_USER, "content": user.to_dict()})
             if ret["success"]:
                 flash('注册 %s ！请登录' % ret["success"])
                 return redirect(url_for('auth.login'))
