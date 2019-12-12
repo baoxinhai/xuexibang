@@ -98,7 +98,7 @@ class QuestionInfo(BaseModel, ModelProcessor):
     catid = Column(Integer, ForeignKey(Category.catid, ondelete="SET NULL", onupdate="CASCADE"), nullable=True)
     ansnumber = Column(Integer, nullable=False)
 
-    unread = Column(Boolean, nullable=False, default=True)
+    unread = Column(Boolean, nullable=False)
 
     __table_args__ = {
 

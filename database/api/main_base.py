@@ -92,6 +92,15 @@ class Operator:
         # 根据用户id获取用户信息
         self.GET_USER_BY_ID = 22
 
+        # 获取未审批问题
+        self.GET_UNREAD_QUESTION = 23
+
+        # 根据分类名称获取id
+        self.GET_CAT_BY_NAME = 24
+
+        # 设置问题已审批
+        self.SET_QUESTION_READ = 25
+
     def get_result(self, given):
         """
         数据库操作函数
@@ -193,6 +202,17 @@ class Operator:
             log_flag = 0
             res = get_user_by_id(cont, session)
 
+        elif function == self.GET_UNREAD_QUESTION:
+            log_flag = 0
+            res = get_unread_question(session)
+
+        elif function == self.GET_CAT_BY_NAME:
+            log_flag = 0
+            res = get_cat_by_name(cont, session)
+
+        elif function == self.SET_QUESTION_READ:
+            res = set_question_read(cont, session)
+
         session.close()
         if res["success"] is True:
             Logger.info(log_flag, res["message"])
@@ -202,4 +222,4 @@ class Operator:
 
 
 if __name__ == '__main__':
-    Logger.info(1,"test")
+    Logger.info(1, "test")
