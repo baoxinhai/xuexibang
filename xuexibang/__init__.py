@@ -66,7 +66,7 @@ def register_template_context(app):
         categories = db.get_result({"function": db.GET_ALL_CATEGORY})["content"]  # 用于显示边栏
         unread_answers = 5
         unread_questions = 10
-        return dict(categories=categories)
+        return dict(categories=categories, unread_answers=unread_answers, unread_questions=unread_questions)
 
 
 def register_errors(app):

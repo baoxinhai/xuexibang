@@ -117,7 +117,7 @@ class AnswerInfo(BaseModel, ModelProcessor):
     uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     quid = Column(Integer, ForeignKey(QuestionInfo.quid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 
-    unread = Column(Boolean, nullable=False, default=True)
+    unread = Column(Boolean, nullable=False)
 
     __table_args__ = {
 
