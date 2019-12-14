@@ -65,7 +65,7 @@ def delete_questions(question_id):
     flash('Question deleted.', 'success')
     return redirect_back()
 
-
+'''success'''
 @dashboard_bp.route('/category/new', methods=['GET', 'POST'])
 @login_required
 def new_category():
@@ -76,8 +76,45 @@ def new_category():
         db.get_result({"function": db.INSERT_CATEGORY,
                        "content": newcate.to_dict()})
         flash("添加成功！", "success")
-        return redirect(url_for('dashboard/manage_category'))
+        return redirect(url_for('dashboard.manage_category'))
+    return render_template('dashboard/new_category.html', form=form)
+
+
+@dashboard_bp.route('/category/<string:cat_name>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_category(cat_name):
+    form = CategoryForm()
+    form.name(render_kw={'placeholder': cat_name})
+    category = db.get_result({"function": db.GET_CAT_BY_NAME, "content": {
+        "catname": cat_name
+    }})["content"]
+    if category["catid"] == 1:
+        flash('You can not edit the default category.', 'warning')
+        return redirect(url_for('front.index'))
+    if form.validate_on_submit():
+        '''需要数据库新功能'''
+        db.get_result({"function": db.UPDATE_CAT_NAME_BY_ID, "content":{
+            "catid": category["catid"],
+            "catname": form.name.data
+        }})
     return render_template('dashboard/edit_category.html', form=form)
+
+
+@dashboard_bp.route('/category/<string:cat_name>/delete', methods=['POST'])
+@login_required
+def delete_category(cat_name):
+    category = db.get_result({"function": db.GET_CAT_BY_NAME, "content":{
+        "catname": cat_name
+    }})['content']
+    if category['catid'] == 1:
+        flash('You can not delete the default category.', 'warning')
+        return redirect(url_for('blog.index'))
+    '''数据库使用？,现在不能删，不然有些问题没有种类了'''
+    db.get_result({"function": db.DELETE_CATEGORY, "content":{
+        "catid": category['catid']
+    }})
+    flash('Category deleted.', 'success')
+    return redirect(url_for('.manage_category'))
 
 
 @dashboard_bp.route('/category/manage', methods=['GET', 'POST'])
@@ -89,7 +126,37 @@ def manage_category():
 @dashboard_bp.route('/users/manage', methods=['GET', 'POST'])
 @login_required
 def manage_users():
-    return render_template('dashboard/manage_users.html')
+    page = request.args.get('page', 1, type=int)
+    per_page = current_app.config['USERS_PER_PAGE']
+    '''等数据库功能'''
+    ret = db.get_result({"functions": db.GET_USERS, "content":{
+        "number": per_page,
+        "start": per_page * (page - 1) + 1
+    }})
+    if ret["content"]:
+        page_record = Page(page, per_page)
+        if page <= 1:
+            page_record.has_prev = False
+        else:
+            page_record.has_prev = True
+        if len(ret["content"]) < per_page:
+            page_record.is_last = True
+    else:  # 啥都没有，说明最后了
+        page_record = Page(page, per_page, True)
+        page_record.has_prev = True
+        page_record.is_last = True
+    users = ret['content']
+    return render_template('dashboard/manage_users.html', users=users, page=page_record)
+
+
+@dashboard_bp.route('/users/<string:name>/delete', methods=['POST'])
+@login_required
+def delete_user(name):
+    db.get_result({"function": db.DELETE_USER_BY_NAME, "content":{
+        "name": name
+    }})
+    flash('User deleted.', 'success')
+    return redirect(url_for('.manage_users'))
 
 
 @dashboard_bp.route('/answers/manage', methods=['GET', 'POST'])

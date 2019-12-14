@@ -32,12 +32,14 @@ class BaseConfig(object):
 class DevelopmentConfig(BaseConfig):  # 用于初始化数据库
     DATABASE_NEED_INIT = True
     QUESTIONS_PER_PAGE = 8
+    USERS_PER_PAGE = 15
     # SQLALCHEMY_DATABASE_URI = 'mysql://webdb:webdata@localhost/XXBDB'
 
 
 class ProductionConfig(BaseConfig):  # 最终的应用环境
     DATABASE_NEED_INIT = False
     QUESTIONS_PER_PAGE = 8
+    USERS_PER_PAGE = 15
 
 
 config = {

@@ -11,6 +11,14 @@
                 href="{{ url_for('front.show_category', category_id=ques['catid']) }}">{{ categories[ques['catid']] }}</a>
             <span class="float-right">{{ moment(ques['qutime']).format('LL') }}</span> <!--categoried是模板上下文变量 -->
         </small>
+        {% if ques['uid'] == current_user.uid or current_user.admin%}  <!-- 当前用户或者管理员可以删除 -->
+            <form class="inline" method="post"
+                  action="{{ url_for('dashboard.delete_questions', question_id=ques['quid'], next=request.full_path) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete
+                </button>
+            </form>
+        {% endif %}
         {% if not loop.last %}
             <hr>
         {% endif %}
