@@ -7,6 +7,27 @@
 from database.models.model import AnswerInfo
 
 
+def get_unread_answer(session):
+    res = {}
+    try:
+        answer_info_list = []
+        answer_list = session.query(AnswerInfo).filter_by(unread=True).all()
+        for answer in answer_list:
+            answer_info_list.append(answer.to_dict())
+        res["success"] = True
+        res["status"] = 0
+        res["message"] = ""
+        res["content"] = answer_info_list
+        return res
+
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1000
+        res["message"] = e.message
+        res["content"] = None
+        return res
+
+
 def insert_answer(answer, session):
     res = {}
     try:
