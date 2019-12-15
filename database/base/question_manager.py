@@ -14,7 +14,7 @@ def set_question_read(quid, session):
     res = {}
     try:
         question_info = session.query(QuestionInfo).filter_by(quid=quid["quid"]).first()
-        question_info.unread = True
+        question_info.unread = False
         session.session.commit()
         res["success"] = True
         res["status"] = 0
@@ -34,7 +34,7 @@ def get_unread_question(session):
     res = {}
     try:
         question_info_list = []
-        question_list = session.query(QuestionInfo).filter_by(unread=False).all()
+        question_list = session.query(QuestionInfo).filter_by(unread=True).all()
         for question in question_list:
             question_info_list.append(question.to_dict())
         res["success"] = True
