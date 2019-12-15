@@ -27,7 +27,7 @@ def settings():
         password = form.password.data
         new_admin = UserInfo()
         new_admin.set_password(password)
-        db.get_result({"function" : db.UPDATE_USER_PWD, "content" : {
+        db.get_result({"function" : db.UPDATE_USER_PWD, "content": {
             "password_hash" : new_admin.password_hash
         }})
         flash("change the password success", "success")
