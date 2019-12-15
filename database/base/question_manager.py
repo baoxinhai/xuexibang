@@ -10,6 +10,47 @@
 from database.models.model import QuestionInfo
 
 
+def set_question_read(quid, session):
+    res = {}
+    try:
+        question_info = session.query(QuestionInfo).filter_by(quid=quid["quid"]).first()
+        question_info.unread = False
+        session.session.commit()
+        res["success"] = True
+        res["status"] = 0
+        res["message"] = ""
+        res["content"] = None
+        return res
+
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1000
+        res["message"] = e.message
+        res["content"] = None
+        return res
+
+
+def get_unread_question(session):
+    res = {}
+    try:
+        question_info_list = []
+        question_list = session.query(QuestionInfo).filter_by(unread=True).all()
+        for question in question_list:
+            question_info_list.append(question.to_dict())
+        res["success"] = True
+        res["status"] = 0
+        res["message"] = ""
+        res["content"] = question_info_list
+        return res
+
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1000
+        res["message"] = e.message
+        res["content"] = None
+        return res
+
+
 def get_recommend_question(number, session):
     question_info_list = []
     question_list = []
@@ -41,6 +82,8 @@ def insert_question(given, session):
         question_info.dict_init(given)
         if question_info.ansnumber is None:
             question_info.ansnumber = 0
+        if question_info.unread is None:
+            question_info.unread = False
         session.add(question_info)
         session.commit()
         res["success"] = True
