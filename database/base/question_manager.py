@@ -30,11 +30,11 @@ def set_question_read(quid, session):
         return res
 
 
-def get_unread_question(session):
+def get_unread_question(number,session):
     res = {}
     try:
         question_info_list = []
-        question_list = session.query(QuestionInfo).filter_by(unread=True).all()
+        question_list = session.query(QuestionInfo).filter_by(unread=True).limit(number["number"]).offset(number["start"]).all()
         for question in question_list:
             question_info_list.append(question.to_dict())
         res["success"] = True
@@ -83,7 +83,7 @@ def insert_question(given, session):
         if question_info.ansnumber is None:
             question_info.ansnumber = 0
         if question_info.unread is None:
-            question_info.unread = False
+            question_info.unread = True
         session.add(question_info)
         session.commit()
         res["success"] = True
