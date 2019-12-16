@@ -33,6 +33,7 @@ def get_users(number, session):
         res["content"] = user_info_list
         return res
 
+
 # 根据用户名查找用户
 def get_user_by_name(user, session):
     res = {}

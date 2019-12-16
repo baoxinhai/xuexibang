@@ -7,11 +7,31 @@
 from database.models.model import AnswerInfo
 
 
-def get_unread_answer(session):
+def set_answer_read(ansid, session):
+    res = {}
+    try:
+        answer_info = session.query(AnswerInfo).filter_by(ansid=ansid["ansid"]).first()
+        answer_info.unread = False
+        session.session.commit()
+        res["success"] = True
+        res["status"] = 0
+        res["message"] = ""
+        res["content"] = None
+        return res
+
+    except Exception as e:
+        res["success"] = False
+        res["status"] = 1000
+        res["message"] = e.message
+        res["content"] = None
+        return res
+
+
+def get_unread_answer(number, session):
     res = {}
     try:
         answer_info_list = []
-        answer_list = session.query(AnswerInfo).filter_by(unread=True).all()
+        answer_list = session.query(AnswerInfo).filter_by(unread=True).limit(number["number"]).offset(number["start"]).all()
         for answer in answer_list:
             answer_info_list.append(answer.to_dict())
         res["success"] = True

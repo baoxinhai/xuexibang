@@ -101,6 +101,12 @@ class Operator:
         # 设置问题已审批
         self.SET_QUESTION_READ = 25
 
+        # 获取未审批答案
+        self.GET_UNREAD_ANSWER = 26
+
+        # 设置答案已审批
+        self.SET_ANSWER_READ = 27
+
     def get_result(self, given):
         """
         数据库操作函数
@@ -204,7 +210,7 @@ class Operator:
 
         elif function == self.GET_UNREAD_QUESTION:
             log_flag = 0
-            res = get_unread_question(session)
+            res = get_unread_question(cont,session)
 
         elif function == self.GET_CAT_BY_NAME:
             log_flag = 0
@@ -212,6 +218,13 @@ class Operator:
 
         elif function == self.SET_QUESTION_READ:
             res = set_question_read(cont, session)
+
+        elif function == self.GET_UNREAD_ANSWER:
+            log_flag = 0
+            res = get_unread_answer(cont,session)
+
+        elif function == self.SET_ANSWER_READ:
+            res = set_question_read(cont,session)
 
         session.close()
         if res["success"] is True:
