@@ -128,7 +128,7 @@ def update_user_pwd(user, session):
 
     try:
         user_info = session.query(UserInfo).filter_by(name=user["name"]).first()
-        user_info.password = user["password"]
+        user_info.password_hash = user["password_hash"]
         res["success"] = True
         res["status"] = 0
         res["message"] = "User: %s password update successfully!!" % user["name"]

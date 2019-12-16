@@ -15,6 +15,8 @@ from xuexibang.main.utils import redirect_back
 from database.models.model import UserInfo, Category
 from xuexibang.main.utils import Page
 
+import click
+
 
 dashboard_bp = Blueprint('dashboard', __name__)
 
@@ -25,11 +27,9 @@ def settings():
     form = AdminForm()
     if form.validate_on_submit():
         password = form.password.data
-        new_admin = UserInfo()
+        new_admin = UserInfo(name=current_user.name, admin=True)
         new_admin.set_password(password)
-        db.get_result({"function" : db.UPDATE_USER_PWD, "content": {
-            "password_hash" : new_admin.password_hash
-        }})
+        db.get_result({"function" : db.UPDATE_USER_PWD, "content": new_admin.to_dict()})
         flash("change the password success", "success")
     return render_template('dashboard/settings.html', form=form)
 
@@ -65,7 +65,7 @@ def delete_questions(question_id):
     flash('Question deleted.', 'success')
     return redirect_back()
 
-'''success'''
+
 @dashboard_bp.route('/category/new', methods=['GET', 'POST'])
 @login_required
 def new_category():
@@ -128,8 +128,8 @@ def manage_category():
 def manage_users():
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['USERS_PER_PAGE']
-    '''等数据库功能'''
-    ret = db.get_result({"functions": db.GET_USERS, "content":{
+    '''继续等待数据库功能'''
+    ret = db.get_result({"functions": db.GET_U, "content":{
         "number": per_page,
         "start": per_page * (page - 1) + 1
     }})
@@ -162,4 +162,33 @@ def delete_user(name):
 @dashboard_bp.route('/answers/manage', methods=['GET', 'POST'])
 @login_required
 def manage_answers():
-    return render_template('dashboard/manage_answers.html')
+    page = request.args.get('page', 1, type=int)
+    per_page = current_app.config['ANSWERS_PER_PAGE']
+    ret = db.get_result({"function": db.GET_UNREAD_ANSWER, "content":{
+        "number": per_page,
+        "start": per_page * (page - 1) + 1
+    }})
+    if ret["content"]:
+        page_record = Page(page, per_page)
+        if page <= 1:
+            page_record.has_prev = False
+        else:
+            page_record.has_prev = True
+        if len(ret["content"]) < per_page:
+            page_record.is_last = True
+    else:  # 啥都没有，说明最后了
+        page_record = Page(page, per_page, True)
+        page_record.has_prev = True
+        page_record.is_last = True
+    unread_answers = ret['content']
+    return render_template('dashboard/manage_answers.html', answers=unread_answers, page=page_record)
+
+
+@dashboard_bp.route('/answer/manage/read/<int:ans_id>', methods=['POST'])
+@login_required
+def read_answer(ans_id):
+    db.get_result({"function": db.SET_ANSWER_READ, "content":{
+        "ansid": ans_id
+    }})
+    flash('Answer readed', 'success')
+    return redirect(url_for('.manage_answers'))
