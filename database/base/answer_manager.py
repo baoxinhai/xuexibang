@@ -2,8 +2,6 @@
 # python: 2.7
 # author: Wang Zhe
 # filename: answer_manager.py
-# 本模块包含：
-# 不对外可见的数据库操作函数
 from database.models.model import AnswerInfo
 
 
