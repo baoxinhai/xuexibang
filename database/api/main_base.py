@@ -220,6 +220,7 @@ class Operator:
             res = set_question_read(cont, session)
 
         elif function == self.GET_UNREAD_ANSWER:
+            log_flag = 0
             res = get_unread_answer(session)
 
         elif function == self.SET_ANSWER_READ:
