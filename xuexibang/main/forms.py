@@ -61,12 +61,14 @@ class AnswerForm(FlaskForm):
 
 class CategoryForm(FlaskForm):  # 用于新增种类的表单
     name = StringField('Name', validators=[DataRequired(),  Length(1, 30)])
-    submit = SubmitField()
+    submit = SubmitField('提交')
 
-    def validate_on_submit(self, field):
-        ret = db.get_result({"function" : db.GET_CATEGORY_BY_NAME, "content" : {
+    def validate_name(self, field):   # 注意 不要写成validate_on_submit了
+        ret = db.get_result({"function" : db.GET_CAT_BY_NAME, "content" : {
             "catname" : field.data
         }})
+        if ret["content"]:
+            raise ValidationError('The category name is already in use.')
 
 
 class AdminForm(FlaskForm):   # 用于更改管理员密码

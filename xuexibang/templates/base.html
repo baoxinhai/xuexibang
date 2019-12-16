@@ -27,7 +27,7 @@
 			<li><a href="{{ url_for('front.home') }}">首页</a></li>
 			<li><a href="{{ url_for('front.myquestion', user_id=current_user.uid, next=request.full_path) }}">我发布的问题</a></li>
             <li><a href="{{ url_for('front.home') }}">我回答的问题</a></li>
-			<li><a href="{{ url_for('front.home') }}" >我关注的问题</a></li>
+			<li><a href="{{ url_for('front.myfollow', user_id=current_user.uid, next=request.full_path) }}" >我关注的问题</a></li>
             <li><a href="{{ url_for('auth.logout', next=request.full_path) }}">{{ current_user.name }} 登出</a></li>
             {% elif not current_user.is_authenticated %}
             <li> <a href="{{ url_for('auth.login', next=request.full_path) }} ">我发布的问题</a></li>

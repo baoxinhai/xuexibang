@@ -66,7 +66,7 @@ def get_all_category(session):
         return res
 
 
-def get_cat_by_name(name,session):
+def get_cat_by_name(name, session):
     res = {}
     try:
         cat = session.query(Category).filter_by(catname = name["catname"]).first()

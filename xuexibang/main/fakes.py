@@ -31,7 +31,7 @@ def fake_category(count=5):
     if ret["content"] : # 若已经建好分类
         click.echo("category already exist")
         return
-    cn = ("高数", "英语", "编程", "考试", "其他")
+    cn = ("其他", "高数", "英语", "编程", "考试")
     for i in range(count):
         category = Category(catname=cn[i])
         db.get_result({"function": db.INSERT_CATEGORY,
