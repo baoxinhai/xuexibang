@@ -210,7 +210,7 @@ class Operator:
 
         elif function == self.GET_UNREAD_QUESTION:
             log_flag = 0
-            res = get_unread_question(session)
+            res = get_unread_question(cont,session)
 
         elif function == self.GET_CAT_BY_NAME:
             log_flag = 0
@@ -221,7 +221,7 @@ class Operator:
 
         elif function == self.GET_UNREAD_ANSWER:
             log_flag = 0
-            res = get_unread_answer(session)
+            res = get_unread_answer(cont,session)
 
         elif function == self.SET_ANSWER_READ:
             res = set_question_read(cont,session)

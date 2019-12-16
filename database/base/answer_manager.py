@@ -27,11 +27,11 @@ def set_answer_read(ansid, session):
         return res
 
 
-def get_unread_answer(session):
+def get_unread_answer(number, session):
     res = {}
     try:
         answer_info_list = []
-        answer_list = session.query(AnswerInfo).filter_by(unread=True).all()
+        answer_list = session.query(AnswerInfo).filter_by(unread=True).limit(number["number"]).offset(number["start"]).all()
         for answer in answer_list:
             answer_info_list.append(answer.to_dict())
         res["success"] = True
