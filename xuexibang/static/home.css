@@ -35,13 +35,6 @@ ul li a {
 	.container{
 		width: 1000px;
 	}
-	main .leftbar {
-		flex: 4;
-
-	}
-	main .rightbar {
-		flex: 1;
-	}
 
 	main .submit_ques {
 		overflow: hidden;
@@ -71,20 +64,19 @@ ul li a {
 		height: 30px;
 	}
 	.btn {
-		width: 50px;
+		width: 62px;
 		height: 33px;
 		font-size:  15px;
+		color: #333;
+		background-color: #e6e6e6;
+		border-color: #adadad;
 	}
 
 	.ques_display a {
 		text-decoration: none;
 	}
 
-	/*分类栏*/
-	.rightbar ul
-	{
-		overflow: hidden;
-	}
+
 
 	.row{
 		margin-left: 0;

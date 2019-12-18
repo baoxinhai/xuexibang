@@ -24,7 +24,7 @@
             <form class="inline" method="post"
                   action="{{ url_for('front.newfollow', question_id=ques['quid'], next=request.full_path) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">关注
+                    <button type="submit" class="btn btn-sm" onclick="return confirm('Are you sure?');">关注
                 </button>
             </form>
         {% endif %}
