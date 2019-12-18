@@ -9,9 +9,9 @@ from flask_login import current_user
 
 from xuexibang.main.extensions import db
 from xuexibang.main.forms import HomeForm, AnswerForm
-from database.models.model import QuestionInfo, AnswerInfo
+from database.models.model import QuestionInfo, AnswerInfo, Follow
 
-from xuexibang.main.utils import Page  # 用于分页的记录
+from xuexibang.main.utils import redirect_back, Page  # 用于分页的记录
 
 import click  # for debug
 
@@ -128,10 +128,61 @@ def show_question(question_id):
 
 
 # 显示某个用户提出的问题
-@front_bp.route('/myquestion/<int:user_id>', )
+@front_bp.route('/myquestion/<int:user_id>')
 def myquestion(user_id):
+    page = request.args.get('page', 1, type=int)
+    per_page = current_app.config['QUESTIONS_PER_PAGE']
     ret = db.get_result({"function" : db.GET_QUESTION_BY_UID, "content" : {
         "uid" : user_id
     }})
+    if ret["content"]:
+        page_record = Page(page, per_page)
+        if page <= 1:
+            page_record.has_prev = False
+        else:
+            page_record.has_prev = True
+        if len(ret["content"]) < per_page:
+            page_record.is_last = True
+    else:  # 啥都没有，说明最后了
+        page_record = Page(page, per_page, True)
+        page_record.has_prev = True
+        page_record.is_last = True
     questions = ret["content"]
-    return render_template('front/myquestion.html', questions=questions)
+    return render_template('front/myquestion.html', questions=questions, page=page_record)
+
+
+@front_bp.route('/myfollow/<int:user_id>/page/<int:page>', defaults={'page': 1})
+def myfollow(user_id, page):
+    page = page
+    per_page = current_app.config['QUESTIONS_PER_PAGE']
+    ret = db.get_result({"function": db.GET_USER_FOLLOW, "content": {
+        "name": current_user.name,
+        "number": per_page,
+        "start": per_page * (page - 1)
+    }})
+    if ret["content"]:
+        page_record = Page(page, per_page)
+        if page <= 1:
+            page_record.has_prev = False
+        else:
+            page_record.has_prev = True
+        if len(ret["content"]) < per_page:
+            page_record.is_last = True
+    else:  # 啥都没有，说明最后了
+        page_record = Page(page, per_page, True)
+        page_record.has_prev = True
+        page_record.is_last = True
+    questions = ret["content"]
+    return render_template('front/myfollow.html', questions=questions, page=page_record)
+
+
+@front_bp.route('/newfollow/<int:question_id>', methods=['GET', 'POST'])
+def newfollow(question_id):
+    follow = Follow(uid=current_user.uid,
+                    quid=question_id)
+    ret = db.get_result({"function": db.INSERT_FOLLOW, "content": follow.to_dict()})
+    if ret["success"]:
+        flash('关注成功！', 'success')
+    else:
+        flash('您已关注', 'info')
+    return redirect_back()

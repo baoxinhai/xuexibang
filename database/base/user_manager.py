@@ -33,6 +33,7 @@ def get_users(number, session):
         res["content"] = user_info_list
         return res
 
+
 # 根据用户名查找用户
 def get_user_by_name(user, session):
     res = {}
@@ -127,7 +128,7 @@ def update_user_pwd(user, session):
 
     try:
         user_info = session.query(UserInfo).filter_by(name=user["name"]).first()
-        user_info.password = user["password"]
+        user_info.password_hash = user["password_hash"]
         res["success"] = True
         res["status"] = 0
         res["message"] = "User: %s password update successfully!!" % user["name"]
