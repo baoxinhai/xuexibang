@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-     <div class="leftbar">
+{#     <div class="leftbar">#}
 
         <div class="submit_ques">
             <form method="post">
@@ -30,7 +30,7 @@
                 </div>
                         {{ form.submit(class='btn btn-default') }}<br>  <!-- 发布问题按钮 -->
 			</form>
-        </div>
+{#        </div>#}
 
 			<!-- 问题显示区 -->
         <div class="row">
@@ -40,7 +40,7 @@
         </div>
      </div>
 
-    <div class="col-sm-4 sidebar rightbar">
+    <div class="col-sm-4 sidebar">
         {% include 'front/_sidebar.html' %}
     </div>
 
