@@ -13,6 +13,10 @@ nav {
 .container{
     width: 1000px;
 }
+
+.col-sm-4 {
+		width: 25%;
+	}
 footer {
     font-size: 13px;
     color: #888;

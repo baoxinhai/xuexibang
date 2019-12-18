@@ -64,6 +64,22 @@ footer {
     width: 70%;
 }
 
+/*.alert-info1 {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.alert1 {
+    position: fixed;
+    left: 940px;
+    top: 4px;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: #d9edf7;
+}
 /*.alert {*/
   /*position: relative;*/
   /*padding: 0.75rem 1.25rem;*/

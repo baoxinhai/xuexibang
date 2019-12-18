@@ -35,13 +35,6 @@ ul li a {
 	.container{
 		width: 1000px;
 	}
-/*	main .leftbar {
-		flex: 4;
-
-	}
-	main .rightbar {
-		flex: 1;
-	}*/
 
 	main .submit_ques {
 		overflow: hidden;
@@ -76,6 +69,7 @@ ul li a {
 		height: 33px;
 		font-size:  15px;
 		float: right;
+
 	}
 
 	.ques_display a {
