@@ -32,6 +32,12 @@ if __name__ == '__main__':
 
     o = Operator()
 
+    ret = o.get_result({"function": o.GET_USERS,
+                        "content":{
+                            "start": 1,
+                            "number": 10
+                        }})
+    print ret
     # category = Category(catname="")
     # ret = o.get_result({"function": o.INSERT_CATEGORY,
     #                "content": category.to_dict()})

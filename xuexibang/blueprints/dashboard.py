@@ -128,10 +128,10 @@ def manage_category():
 def manage_users():
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['USERS_PER_PAGE']
-    '''继续等待数据库功能'''
-    ret = db.get_result({"functions": db.GET_U, "content":{
-        "number": per_page,
-        "start": per_page * (page - 1) + 1
+    start = per_page * (page - 1) + 1
+    ret = db.get_result({"function": db.GET_USERS, "content":{
+        "start": start,
+        "number": per_page
     }})
     if ret["content"]:
         page_record = Page(page, per_page)
@@ -159,6 +159,7 @@ def delete_user(name):
     return redirect(url_for('.manage_users'))
 
 
+# 对未过目的问题进行管理
 @dashboard_bp.route('/answers/manage', methods=['GET', 'POST'])
 @login_required
 def manage_answers():
