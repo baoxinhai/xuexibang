@@ -32,3 +32,8 @@ footer {
     padding: 10px;
 
 }
+
+.btn{
+    float: right;
+    background-color: #b8daff;
+}
