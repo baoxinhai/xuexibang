@@ -40,7 +40,8 @@ def home(page):
                 uid=userid,  # 提问者id
                 qutime=datetime.datetime.now(),
                 catid=category,
-                ansnumber=0
+                ansnumber=0,
+                unread=True
             )
             db.get_result({"function" : db.INSERT_QUESTION, "content" : question.to_dict()})
             flash("提交问题成功！", "success")
@@ -50,7 +51,10 @@ def home(page):
             flash("请先登录!", "warning")
 
     per_page = current_app.config['QUESTIONS_PER_PAGE']  # 每页显示的数量
-    ret = db.get_result({"function" : db.GET_RECOMMEND_QUESTION, "content": {"number": per_page, "start" : per_page * (page - 1)}})
+    ret = db.get_result({"function" : db.GET_RECOMMEND_QUESTION, "content": {
+        "number": per_page,
+        "start" : per_page * (page - 1),
+        "unread": False}})
     if ret["content"]:
         page_record=Page(page, per_page)
         if page <= 1:
@@ -82,7 +86,10 @@ def show_category(category_id, page):
     # {"number": 5, "start": 0, "catid": category_id}})
     per_page = current_app.config['QUESTIONS_PER_PAGE']  # 每页显示的数量
     ret = db.get_result(
-        {"function": db.GET_QUESTION_BY_CAT, "content": {"number": per_page, "start": per_page * (page - 1), "catid": category_id}})
+        {"function": db.GET_QUESTION_BY_CAT, "content": {"number": per_page,
+                                                         "start": per_page * (page - 1),
+                                                         "catid": category_id,
+                                                         "unread": False}})
     if ret["content"]:
         page_record = Page(page, per_page)
         if page <= 1:
@@ -117,7 +124,8 @@ def show_question(question_id):
                 anscontent=anscontent,
                 anstime=anstime,
                 uid=uid, # 回答者id
-                quid=quid
+                quid=quid,
+                unread=True
             )
             db.get_result({"function" : db.INSERT_ANSWER, "content" : answer.to_dict()})
             flash('Answer published!')

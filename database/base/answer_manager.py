@@ -91,7 +91,7 @@ def get_answer_by_id(ansid, session):
 def get_answer_by_quid(quid, session):
     res = {}
     try:
-        answer_info_list = session.query(AnswerInfo).filter_by(quid=quid["quid"]).all()
+        answer_info_list = session.query(AnswerInfo).filter_by(unread=False).filter_by(quid=quid["quid"]).all()
         res["success"] = True
         res["status"] = 0
         res["message"] = "Question: %s 'answers successfully get" % quid["quid"]

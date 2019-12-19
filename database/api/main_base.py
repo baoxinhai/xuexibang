@@ -107,6 +107,9 @@ class Operator:
         # 设置答案已审批
         self.SET_ANSWER_READ = 27
 
+        # 获取一定数量用户
+        self.GET_USERS = 28
+
     def get_result(self, given):
         """
         数据库操作函数
@@ -225,6 +228,9 @@ class Operator:
 
         elif function == self.SET_ANSWER_READ:
             res = set_question_read(cont,session)
+
+        elif function == self.GET_USERS:
+            res = get_users(cont, session)
 
         session.close()
         if res["success"] is True:
