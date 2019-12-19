@@ -194,3 +194,19 @@ def newfollow(question_id):
     else:
         flash('您已关注', 'info')
     return redirect_back()
+
+
+@front_bp.route('/myanswer/<int:user_id>')
+def myanswer(user_id):
+    ret = db.get_result({"function": db.GET_ANSWER_BY_UID, "content": {"uid": user_id}})
+    answers = ret["content"]
+    return render_template('front/myAnswer.html', answers=answers)
+
+
+@front_bp.route('/myanswer/delete/<int:ansid>', methods=['POST'])
+def delete_myanswer(ansid):
+    db.get_result({"function": db.DELETE_ANSWER_BY_ID, "content": {
+        "ansid": ansid
+    }})
+    flash('Answer deleted!', 'success')
+    return redirect(url_for('.myanswer', user_id = current_user.uid))

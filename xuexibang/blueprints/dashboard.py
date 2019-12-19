@@ -109,7 +109,6 @@ def delete_category(cat_name):
     if category['catid'] == 1:
         flash('You can not delete the default category.', 'warning')
         return redirect(url_for('blog.index'))
-    '''数据库使用？,现在不能删，不然有些问题没有种类了'''
     db.get_result({"function": db.DELETE_CATEGORY, "content":{
         "catid": category['catid']
     }})
