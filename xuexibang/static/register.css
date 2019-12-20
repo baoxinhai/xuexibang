@@ -34,8 +34,9 @@ hr {
 .btn {
     margin-right: 0;
     float: right;
-    background-color: #78c8ff;
+    background-color: rgba(158, 213, 250, 1);
     color: white;
+
 }
 footer {
     font-size: 13px;
@@ -45,4 +46,11 @@ footer {
     text-align: center;
     padding: 10px;
 
+}
+
+.alert{
+    position: absolute;
+    right: 20%;
+    top: 0;
+    width: 200px;
 }
