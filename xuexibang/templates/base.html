@@ -40,7 +40,7 @@
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true"
                                aria-expanded="false">
-                                New <span class="caret"></span>
+                                新建 <span class="caret"></span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ url_for('dashboard.new_category') }}">新种类</a>
@@ -48,30 +48,33 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true"
-                               aria-expanded="false">
-                                Manage <span class="caret"></span>
+                               aria-haspopup="true" aria-expanded="false">管理 <span class="caret"></span>
                                 {% if unread_comments or unread_questions %}  <!--  -->
                                     <span class="badge badge-success">new</span>
                                 {% endif %}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url_for('dashboard.manage_users') }}">Users</a>
-                                <a class="dropdown-item" href="{{ url_for('dashboard.manage_category') }}">Categories</a>
-                                <a class="dropdown-item" href="{{ url_for('dashboard.manage_questions') }}">Questions
-                                    {% if unread_questions %}
-                                        <span class="badge badge-success">{{ unread_questions }}</span>
-                                    {% endif %}
-                                </a>
-                                <a class="dropdown-item" href="{{ url_for('dashboard.manage_answers') }}">
-                                    Answers
+                                <ul style="list-style: none">
+                                    <li><a class="dropdown-item" href="{{ url_for('dashboard.manage_users') }}">管理用户</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('dashboard.manage_category') }}">管理类别</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url_for('dashboard.manage_questions') }}">管理问题
+                                        {% if unread_questions %}
+                                            <span class="badge badge-success">{{ unread_questions }}</span>
+                                        {% endif %}
+                                         </a>
+                                    </li>
+                                    <li>
+                                     <a class="dropdown-item" href="{{ url_for('dashboard.manage_answers') }}">未审核问题
                                     {% if unread_answers %}
                                         <span class="badge badge-success">{{ unread_answers }}</span>
                                     {% endif %}
-                                </a>
+                                    </a>
+                                    </li>
+                                </ul>
                             </div>
                         </li>
-                         <li><a href="{{ url_for('dashboard.settings') }}">settings</a></li>
+                         <li><a href="{{ url_for('dashboard.settings') }}">设置</a></li>
             <li><a href="{{ url_for('auth.logout', next=request.full_path) }}">{{ current_user.name }} 登出</a></li>
             {% endif %}
 		</ul>
@@ -82,7 +85,7 @@
 
 <main class="container">
     {% for message in get_flashed_messages(with_categories=True) %}
-        <div class="alert alert-{{ message[0] }}" role="alert">
+        <div class="alert alert-{{ message[0] }} alert-info" role="alert">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{ message[1] }}
         </div>

@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% from 'bootstrap/form.html' import render_form %}
 
-{% block title %}New Category{% endblock %}
+{% block title %}新种类{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css' ) }}">
+{% endblock %}
 
 {% block content %}
     <div class="page-header">

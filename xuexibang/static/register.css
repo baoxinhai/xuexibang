@@ -10,7 +10,7 @@ nav {
 }
 
 hr {
-    background-color: white;
+    background-color: #904545;
 }
 .page-header {
     margin: 0;
@@ -30,16 +30,13 @@ hr {
     line-height: 50px;
 }
 
-/*.card-body .btn ,
-.card-body small
-{
-    text-align: right;
-}*/
-
-
 
 .btn {
     margin-right: 0;
+    float: right;
+    background-color: rgba(158, 213, 250, 1);
+    color: white;
+
 }
 footer {
     font-size: 13px;
@@ -49,4 +46,11 @@ footer {
     text-align: center;
     padding: 10px;
 
+}
+
+.alert{
+    position: absolute;
+    right: 20%;
+    top: 0;
+    width: 200px;
 }

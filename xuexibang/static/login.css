@@ -21,7 +21,6 @@ nav {
 .form_container {
     width: 60%;
     margin: 0 auto;
-    /*padding-left: 200px;*/
 }
 footer {
     font-size: 13px;
@@ -31,4 +30,17 @@ footer {
     text-align: center;
     padding: 10px;
 
+}
+
+.btn{
+    float: right;
+    background-color: rgba(158, 213, 250, 1);
+    color: white;
+}
+
+.alert{
+    position: absolute;
+    right: 20%;
+    top: 0;
+    width: 200px;
 }

@@ -6,19 +6,10 @@
 		margin: auto;
 	}
 
-	ul li {
-		list-style: none;
-	}
-	/*导航栏*/
 	nav {
 		width: 1000px;
 		border-bottom: 1px solid black;
 		background-color: white;
-	}
-
-	ul li a {
-		text-decoration: none;
-		color: black;
 	}
 
 	/*主体左边部分*/
@@ -29,21 +20,11 @@
 	.container {
 		width: 1000px;
 	}
-	.leftbar {
-		flex: 4;
-	}
-
-	.leftbar
-	.myq_container {
-		margin-top: 50px;
-	}
-	.rightbar {
-		flex: 1;
-	}
 
 	.row{
 		margin-left: 0;
 		margin-right: 0;
+		width: 70%;
 	}
 
 	footer {
@@ -55,3 +36,30 @@
 		padding: 10px;
 
 	}
+
+	.ques_each{
+		position: relative;
+	}
+
+	.btn {
+		position: absolute;
+		bottom: 5px;
+		margin-left: 10px;
+		padding: 2px;
+		width: 57px;
+		height: 30px;
+		font-size: 14px;
+	}
+	.btn-info{
+		position: absolute;
+		right:20px;
+	}
+	.btn-danger{
+		right: 80px;
+	}
+	.alert{
+    position: absolute;
+    right: 20%;
+    top: 0;
+    width: 200px;
+}
