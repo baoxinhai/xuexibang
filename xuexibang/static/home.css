@@ -1,3 +1,22 @@
+html{
+
+		background-repeat: round;
+	}
+body{
+	background-image: url("b2.jpg");
+	background-size: contain;
+}
+
+.card-header{
+	font-size: 16px;
+	line-height: 50px;
+	font-weight: bold;
+}
+
+hr{
+	border: 10000px;
+
+}
 body {
 	width: 1000px;
 	margin: auto;
@@ -14,16 +33,21 @@ form {
 
 main {
 	display: flex;
+	background-color: white;
 }
 
 .container{
 	width: 1000px;
+	/*background-color: #80acd2;*/
+	/*background-color: transparent;*/
+
 }
 
 main .submit_ques {
 	overflow: hidden;
 	margin: 5px auto;
 	border-bottom: 1px solid black;
+
 }
 
 .form_container {
@@ -83,4 +107,21 @@ footer {
 	background-color: #cce5ff;
 	border-color: #b8daff;
 }
+
+.navbar{
+	margin-bottom:0px;
+}
+.list-group-item2:hover{
+	background-color: #a5c9e3;
+}
+
+.list-group-item{
+	text-align: center;
+}
+
+.a{
+	color:#596982;
+
+}
+
 

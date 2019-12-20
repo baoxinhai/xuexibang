@@ -19,7 +19,7 @@
                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">删除
                 </button>
             </form>
-            <br>
+            <!--<br>-->
         {% endif %}
 <!-- 用户关注问题 -->
         {% if current_user.is_authenticated and not current_user.admin%}
