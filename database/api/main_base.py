@@ -227,7 +227,7 @@ class Operator:
             res = get_unread_answer(cont,session)
 
         elif function == self.SET_ANSWER_READ:
-            res = set_question_read(cont,session)
+            res = set_answer_read(cont,session)
 
         elif function == self.GET_USERS:
             res = get_users(cont, session)

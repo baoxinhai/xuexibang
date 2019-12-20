@@ -118,7 +118,7 @@ def show_question(question_id):
         if current_user.is_authenticated:
             anscontent = form.answer.data
             quid = question_id
-            uid = 2  # current_user.uid
+            uid = current_user.uid
             anstime = datetime.datetime.now()
             answer = AnswerInfo(
                 anscontent=anscontent,
@@ -209,4 +209,4 @@ def delete_myanswer(ansid):
         "ansid": ansid
     }})
     flash('Answer deleted!', 'success')
-    return redirect(url_for('.myanswer', user_id = current_user.uid))
+    return redirect(url_for('.myanswer', user_id=current_user.uid))

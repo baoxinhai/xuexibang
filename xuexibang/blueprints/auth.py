@@ -46,8 +46,10 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('已退出登录！','info')
-    return redirect_back()
+
+    flash('Logout success .', 'info')
+    return redirect((url_for('front.home')))
+
 
 
 @auth_bp.route('/register', methods=['GET', 'POST'])

@@ -10,7 +10,7 @@ def set_answer_read(ansid, session):
     try:
         answer_info = session.query(AnswerInfo).filter_by(ansid=ansid["ansid"]).first()
         answer_info.unread = False
-        session.session.commit()
+        session.commit()
         res["success"] = True
         res["status"] = 0
         res["message"] = ""
