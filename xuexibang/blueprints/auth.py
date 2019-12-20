@@ -35,7 +35,7 @@ def login():
                          password_hash=userinfo['password_hash'])
             if user.validate_password(password_input):
                 login_user(user, remember)
-                flash('Welcome home, %s!' % username_input)
+                flash('欢迎回来, %s!' % username_input)
                 return redirect_back()
         else:
             flash('No account.', 'warning')
@@ -46,7 +46,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('Logout success .','info')
+    flash('已退出登录！','info')
     return redirect_back()
 
 
@@ -66,7 +66,7 @@ def register():
             user.set_password(password)
             ret = db.get_result({"function": db.INSERT_USER, "content": user.to_dict()})
             if ret["success"]:
-                flash('注册 %s ！请登录' % ret["success"])
+                flash('注册%s！请登录' % ret["success"])
                 return redirect(url_for('auth.login'))
             else:
                 flash('注册失败')
