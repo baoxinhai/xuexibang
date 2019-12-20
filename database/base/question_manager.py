@@ -15,7 +15,7 @@ def set_question_read(quid, session):
     try:
         question_info = session.query(QuestionInfo).filter_by(quid=quid["quid"]).first()
         question_info.unread = False
-        session.session.commit()
+        session.commit()
         res["success"] = True
         res["status"] = 0
         res["message"] = ""

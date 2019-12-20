@@ -32,12 +32,9 @@ if __name__ == '__main__':
 
     o = Operator()
 
-    ret = o.get_result({"function": o.GET_RECOMMEND_QUESTION,
-                        "content":{
-                            "start": 1,
-                            "number": 10,
-                            "unread": True
-                        }})
+    ret = o.get_result({"function": o.SET_ANSWER_READ, "content":{
+        "ansid": 22
+    }})
     print ret
     # category = Category(catname="")
     # ret = o.get_result({"function": o.INSERT_CATEGORY,
