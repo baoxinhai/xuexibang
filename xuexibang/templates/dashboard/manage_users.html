@@ -7,7 +7,7 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>Users</h1>
+        <h1>用户</h1>
     </div>
 
 {% if users %}
@@ -41,7 +41,7 @@
         <div class="tip"><h5>No Users.</h5></div>
     {% endif %}
 
-<nav aria-label="Page navigation">
+<nav aria-label="Page navigation" style="float: right">
         <ul class="pagination">
             {% if page.has_prev %}
             <li class="page-item active"><a class="page-link" href="{{ url_for(request.endpoint, page=page.cur_page-1) }}">上一页</a></li>

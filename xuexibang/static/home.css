@@ -12,6 +12,10 @@ form {
 	margin-bottom: 5px;
 }
 
+main {
+	display: flex;
+}
+
 .container{
 	width: 1000px;
 }

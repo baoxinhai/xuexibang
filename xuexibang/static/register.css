@@ -34,7 +34,8 @@ hr {
 .btn {
     margin-right: 0;
     float: right;
-    background-color: #b8daff;
+    background-color: #78c8ff;
+    color: white;
 }
 footer {
     font-size: 13px;
