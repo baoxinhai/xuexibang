@@ -6,6 +6,8 @@
 *.docx
 .env
 *.txt
-/database/config/log_config.json
-/database/config/db_config.json
+
+/database/config/*.json
+*.pptx
+*.doc
 

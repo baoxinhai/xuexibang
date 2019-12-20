@@ -109,3 +109,10 @@
 		padding: 10px;
 
 	}
+
+	.alert{
+    position: absolute;
+    right: 20%;
+    top: 0;
+    width: 200px;
+}
