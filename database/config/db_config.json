@@ -16,7 +16,7 @@
     "host": "localhost",
     "db": "xxbdb",
     "port": "3306",
-    "username": "root",
-    "pwd": "990810liziqi"
+    "username": "webdb",
+    "pwd": "webdata"
   }
 }
