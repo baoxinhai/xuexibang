@@ -4,11 +4,12 @@ import os
 
 import click
 from flask import Flask, render_template
+from flask_wtf.csrf import CSRFError
 
 from xuexibang.blueprints.auth import auth_bp
 from xuexibang.blueprints.front import front_bp
 from xuexibang.blueprints.dashboard import dashboard_bp
-from xuexibang.main.extensions import bootstrap, db, ckeditor, moment, mail
+from xuexibang.main.extensions import bootstrap, db, ckeditor, moment, mail, login_manager, csrf
 from xuexibang.settings import config
 
 
@@ -37,12 +38,11 @@ def register_logging(app):
 
 def register_extensions(app):
     bootstrap.init_app(app)
-    # need?
-    # db.init_app(app)
-
+    login_manager.init_app(app)
     ckeditor.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
+    csrf.init_app(app)
 
 
 def register_blueprints(app):
@@ -64,7 +64,15 @@ def register_template_context(app):
     @app.context_processor
     def make_template_context():
         categories = db.get_result({"function": db.GET_ALL_CATEGORY})["content"]  # 用于显示边栏
-        return dict(categories=categories)
+        unread_questions = len(db.get_result({"function": db.GET_UNREAD_QUESTION, 'content':{
+            "start": 0,
+            "number": 99
+        }})["content"])
+        unread_answers = len(db.get_result({"function": db.GET_UNREAD_ANSWER, "content":{
+            "start": 0,
+            "number": 99
+        }})["content"])
+        return dict(categories=categories, unread_answers=unread_answers, unread_questions=unread_questions)
 
 
 def register_errors(app):
@@ -80,6 +88,10 @@ def register_errors(app):
     def internal_server_error(e):
         return render_template('errors/500.html'), 500
 
+    @app.errorhandler(CSRFError)
+    def handle_csrf_error(e):
+        return render_template('errors/400.html', description=e.description), 400
+
 
 def register_commands(app):
     @app.cli.command()
@@ -93,13 +105,31 @@ def register_commands(app):
             click.echo('Drop tables.')
         click.echo('Initialized database.')
 
+
+    @app.cli.command()
+    @click.option('--username', prompt=True, help='The administrator\'s name used to login.')
+    @click.option('--email', prompt=True, help='The email:')
+    @click.option('--password', prompt=True, hide_input=True,
+                  confirmation_prompt=True, help='The password used to login.')
+    def init(username, email, password):
+        from database.models.model import UserInfo
+        click.echo('Initializing the database...')
+        db.get_result({"function": db.DATABASE_INIT, "content": "", "dev": True})
+
+        click.echo('Creating the temporary administrator account...')
+        admin=UserInfo(name=username, email=email, admin=True)
+        admin.set_password(password)
+        db.get_result({"function":db.INSERT_USER, "content":admin.to_dict()})
+        click.echo('Done.')
+
     @app.cli.command()
     @click.option('--category', default=5, help='Quantity of question\'s categoty, 5 kinds')
     @click.option('--qna', default=10, help='Generate questions and their answers, 10 questions')
     @click.option('--follow', default=1, help='Generate user id=1 \'s follow')
     def forge(category, qna, follow):
         from xuexibang.main.fakes import fake_category, fake_follow, fake_qna, fake_user
-        db.get_result({"function": db.DATABASE_INIT, "content": "", "dev":True})
+        # 初始化数据库放到了init选项中
+        # db.get_result({"function": db.DATABASE_INIT, "content": "", "dev":True})
 
         click.echo('Generating the user..')
         fake_user()

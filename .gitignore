@@ -7,3 +7,7 @@
 .env
 *.txt
 
+/database/config/*.json
+*.pptx
+*.doc
+

@@ -10,6 +10,10 @@ from database.models.model_manager import get_session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import event
 
+from werkzeug.security import generate_password_hash, check_password_hash  # 用于密码hash
+
+from flask_login import UserMixin
+
 BaseModel = declarative_base()
 
 
@@ -56,13 +60,13 @@ class Category(BaseModel, ModelProcessor):
     }
 
 
-class UserInfo(BaseModel, ModelProcessor):
+class UserInfo(BaseModel, ModelProcessor, UserMixin):
     __tablename__ = "UserInfo"
 
     uid = Column(Integer, primary_key=True)
 
     name = Column(String(32), nullable=False, unique=True)
-    password = Column(String(32), nullable=False)
+    password_hash = Column(String(128), nullable=False)
     email = Column(String(32), nullable=False, unique=True)
     admin = Column(Boolean, nullable=True)
     __table_args__ = {
@@ -70,6 +74,15 @@ class UserInfo(BaseModel, ModelProcessor):
         'mysql_charset': 'UTF8MB4'
 
     }
+
+    def get_id(self):
+        return self.uid
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def validate_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 
 class QuestionInfo(BaseModel, ModelProcessor):
@@ -82,8 +95,11 @@ class QuestionInfo(BaseModel, ModelProcessor):
     qutime = Column(DateTime, nullable=False)
     uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     ansid = Column(Integer, nullable=True)
-    catid = Column(Integer, ForeignKey(Category.catid, ondelete="SET NULL", onupdate="CASCADE"), nullable=True)
+    catid = Column(Integer, ForeignKey(Category.catid, onupdate="CASCADE"), nullable=True)
     ansnumber = Column(Integer, nullable=False)
+
+    unread = Column(Boolean, nullable=False)
+
     __table_args__ = {
 
         'mysql_charset': 'UTF8MB4'
@@ -100,6 +116,9 @@ class AnswerInfo(BaseModel, ModelProcessor):
 
     uid = Column(Integer, ForeignKey(UserInfo.uid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     quid = Column(Integer, ForeignKey(QuestionInfo.quid, ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+
+    unread = Column(Boolean, nullable=False)
+
     __table_args__ = {
 
         'mysql_charset': 'UTF8MB4'
